@@ -54,5 +54,5 @@ Items on the current TODO-list:
     - ... more ...
 - expose a SPARQL-endpoint
 - combine data from other sources?
-- add a client/UI for exploring data? 
+- add a client/UI for exploring data visually? 
 
