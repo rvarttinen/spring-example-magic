@@ -1,12 +1,12 @@
 # spring-example-magic
-A simple example of using Spring Boot with an external source of data converting it to RDF and storing it in a triple store. The data cen be exposed in various formats by this service: 
+A simple example of using Spring Boot with an external source of data converting it to RDF and storing it in a triple store. The data can be exposed in various formats by this service: 
 * RDF; Turtle, RDF/XML and JSON-LD
 * Regular formats like JSON and XML, without semantics
 * Maybe more on its way ... 
 
 # Introduction
 This project has several purposes: 
-* serve as an example of how to retrieve data from an external service and store that dat ain a triple after applying semantics to it
+* serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
 * base for experimentation using the latest and greatest of Java (currently 23) and other libraries used in this project
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, etc.
 
@@ -53,6 +53,6 @@ Items on the current TODO-list:
     - string templates should be useful when creating some queries ...
     - ... more ...
 - expose a SPARQL-endpoint
-- combine data from other sources? 
- 
+- combine data from other sources?
+- add a client/UI for exploring data? 
 
