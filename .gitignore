@@ -36,7 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
-### Eclipse ###
-.classpath
-.project
-/.settings/
+### Local DB ###
+MyDatabases/DB1/*
+
+!MyDatabases/DB1/.gitkeep
