@@ -25,7 +25,7 @@ gradlew build
 ```
 Building the code will also execute the tests in the project. 
 
-It is recommended to use a tool like Postman (https://www.postman.com/downloads/) to make invocations to the service and try different 'Accept' headers to the results.  
+It is recommended to use a tool like Postman (https://www.postman.com/downloads/) to make invocations to the service and try different 'Accept' headers to see the results. 
 Running the service in an Windows environment: 
 
 ```
