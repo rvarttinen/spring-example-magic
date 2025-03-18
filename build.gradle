@@ -1,0 +1,54 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id "com.diffplug.eclipse.apt" version "4.3.0" // Mapstruct - only for Eclipse 
+}
+
+group = 'se.autocorrect'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(23)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	
+	implementation 'org.apache.jena:apache-jena-libs:5.3.0'	
+	implementation 'org.apache.jena:jena-querybuilder:5.3.0'
+	
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	implementation 'com.google.guava:guava:33.4.0-jre'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+options.compilerArgs = ['-parameters']
+doFirst {
+    println "Compiler args: ${options.compilerArgs}"
+}}
+
+compileJava {
+    options.compilerArgs += [
+        '-Amapstruct.suppressGeneratorTimestamp=true',
+        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+        '-Amapstruct.verbose=true',
+        '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
