@@ -50,9 +50,12 @@ Items on the current TODO-list:
 - see if we can make use of some interesting new features in Java: 
     - switch with pattern matching
     - primitive types in patterns (instanceof and switch)
-    - string templates should be useful when creating some queries ...
+    - string templates should be useful when creating queries ...
+    - use a SequencedCollection where applicable 
     - ... more ...
 - expose a SPARQL-endpoint
 - combine data from other sources?
+- introduce Futures for handling incoming requests (to experiment codewise, this service is not required to be performant in any way)
+- collect utilities common to other projects into thier own repository (expose a util-library for reuse and avoid code duplication over several repos)
 - add a client/UI for exploring data visually? 
 
