@@ -34,9 +34,4 @@ public class SpringExampleMagicApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringExampleMagicApplication.class, args);
 	}
-	
-//	@Bean
-//	public RestTemplate createRestTemplate(RestTemplateBuilder builder) {
-//		return builder.connectTimeout(Duration.ofSeconds(30)).build();
-//	}
 }
