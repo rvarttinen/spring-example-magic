@@ -10,7 +10,7 @@ This project has several purposes:
 * base for experimentation using the latest and greatest of Java (currently 23) and other libraries used in this project
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, etc.
 
-# Build and Running the service
+# Building and Running the service
 After checking out the code from this repository, building it should be straightforward. 
 In a Windows environment: 
 
