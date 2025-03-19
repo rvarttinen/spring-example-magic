@@ -73,39 +73,31 @@ public class TDBTripleStore implements TripleStore {
 	@Override
 	public Optional<Model> select(Query query, MagicResultProcessor processor) {
 		
-		class ModelHolder {
-			Model model;
-		}
-
-		final ModelHolder rsHolder = new ModelHolder();
+		var wrapper = new Object(){ Model model = null; };
 
 		Txn.executeRead(dataSet, () -> 	{
 			
 			ResultSet resultSet = select(query);
 			Model model = processor.processResultSt(resultSet);
 			
-			rsHolder.model = model;
+			wrapper.model = model;
 		});
 
-		return Optional.ofNullable(rsHolder.model);
+		return Optional.ofNullable(wrapper.model);
 	}
 
 	@Override
 	public ResultSet select(Query query) {
 
-		class ResultSetHolder {
-			ResultSet resultSet;
-		}
-
-		final ResultSetHolder rsHolder = new ResultSetHolder();
+		var wrapper = new Object(){ ResultSet resultSet; };
 
 		Txn.executeRead(dataSet, () -> {
 
 			QueryExecution qexec = QueryExecutionFactory.create(query, dataSet);
-			rsHolder.resultSet = qexec.execSelect();
+			wrapper.resultSet = qexec.execSelect();
 		});
 
-		return rsHolder.resultSet;
+		return wrapper.resultSet;
 	}
 
 	@Override
