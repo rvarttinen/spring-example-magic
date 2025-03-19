@@ -46,7 +46,8 @@ When this service is started up it does not populate the Bloom Filter from the t
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
-- add a mechanism that reads any stored entries from previous sessions to the Bloom Filter 
+- add a mechanism that reads any stored entries from previous sessions to the Bloom Filter
+- add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
 - see if we can make use of some interesting new features in Java: 
     - switch with pattern matching
     - primitive types in patterns (instanceof and switch)
