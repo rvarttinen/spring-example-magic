@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -85,44 +86,9 @@ public class MagicController {
 			magicStuff = Optional.of(magicRdfService.listAllMagic());
 		}
 
-		HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = calculateLDContentTypeHeader(accept);
 
-		boolean notSupportedMediaType = false;
-
-		switch (accept) {
-
-		case LDMediaTypes.TEXT_TURTLE:
-			headers.setContentType(LDMediaType.TEXT_TURTLE.asMediaType());
-			break;
-		case LDMediaTypes.JSON_LD:
-			headers.setContentType(LDMediaType.JSON_LD.asMediaType());
-			break;
-		case LDMediaTypes.RDF_XML:
-			headers.setContentType(LDMediaType.RDF_XML.asMediaType());
-			break;
-		default:
-			notSupportedMediaType = true;
-		}
-
-		ResponseEntity<Model> response = null;
-
-		if (notSupportedMediaType) {
-			response = new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-		} else {
-			
-			if(magicStuff.isPresent()) {
-				
-				Model returnData = magicStuff.get();
-				
-				if (returnData.size() == 0) {
-					response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
-				} else {
-					response = new ResponseEntity<>(returnData, headers, HttpStatus.OK);
-				}
-			}
-		}
-
-		return response;
+		return headers.isEmpty() ? new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE) : createOkReponse(magicStuff, headers);
 	}
 
 	private ResponseEntity<MagicStuff> getMagicByKey(String accept, String key) {
@@ -146,6 +112,13 @@ public class MagicController {
 				new ResponseEntity<>(HttpStatus.NO_CONTENT) : 
 				new ResponseEntity<>(magicStuffList, headers, HttpStatus.OK);
 	}
+	
+	private ResponseEntity<Model> createOkReponse(Optional<Model> magicStuff, HttpHeaders headers) {
+		
+		Model model = magicStuff.orElse(ModelFactory.createDefaultModel());	
+		
+		return model.isEmpty() ? new ResponseEntity<Model>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(model, headers, HttpStatus.OK);
+	}
 
 	private HttpHeaders calculateContentTypeHeader(String accept) {
 
@@ -153,12 +126,23 @@ public class MagicController {
 
 		switch (accept) {
 
-		case MediaType.TEXT_XML_VALUE:
-			headers.setContentType(MediaType.TEXT_XML);
-			break;
-		case MediaType.APPLICATION_JSON_VALUE:
-		default:
-			headers.setContentType(MediaType.APPLICATION_JSON);
+		case MediaType.TEXT_XML_VALUE -> headers.setContentType(MediaType.TEXT_XML);
+		case MediaType.APPLICATION_JSON_VALUE -> headers.setContentType(MediaType.APPLICATION_JSON);
+		default -> headers.setContentType(MediaType.APPLICATION_JSON);
+		}
+
+		return headers;
+	}
+	
+	private HttpHeaders calculateLDContentTypeHeader(String accept) {
+
+		var headers = new HttpHeaders();
+
+		switch (accept) {
+
+		case LDMediaTypes.TEXT_TURTLE -> headers.setContentType(LDMediaType.TEXT_TURTLE.asMediaType());
+		case LDMediaTypes.JSON_LD -> headers.setContentType(LDMediaType.JSON_LD.asMediaType());
+		case LDMediaTypes.RDF_XML -> headers.setContentType(LDMediaType.RDF_XML.asMediaType());
 		}
 
 		return headers;
