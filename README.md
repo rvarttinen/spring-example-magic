@@ -58,5 +58,5 @@ Items on the current TODO-list:
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not required to be performant in any way)
 - collect utilities common to other projects into thier own repository (expose a util-library for reuse and avoid code duplication over several repos)
 - add a client/UI for exploring data visually? 
-- String templates was introduced as a preview in 21, but as of 23 the feature has been axed due to design flaws. So, we wil not se any of those as we ar eon 23 ... 
+- String templates was introduced as a preview in 21, but as of 23 the feature has been axed due to design flaws. So, we will not se any of those as we are on 23 ... 
 
