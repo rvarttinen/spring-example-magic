@@ -25,6 +25,10 @@ dependencies {
 	implementation 'org.apache.jena:apache-jena-libs:5.3.0'	
 	implementation 'org.apache.jena:jena-querybuilder:5.3.0'
 	
+	// Spring Boot is opinionated in several ways, of one is delivering only JSON out-of-the-box by default
+	// This dependecy added for suppot of XML ... 
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3'
+	
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	implementation 'com.google.guava:guava:33.4.0-jre'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
