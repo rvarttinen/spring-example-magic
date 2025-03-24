@@ -54,14 +54,17 @@ public class MagicController {
 	private final MagicService magicService;
 	private final MagicRDFService magicRdfService;
 
-	MagicController(@Qualifier("magicService") MagicService magicService,
+	MagicController(
+			@Qualifier("magicService") MagicService magicService,
 			@Qualifier("magicRdfService") MagicRDFService magicRdfService) {
+		
 		this.magicService = magicService;
 		this.magicRdfService = magicRdfService;
 	}
 
 	@GetMapping(value = "/magic", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
-	public ResponseEntity<?> getAllMagicThereIs(@RequestHeader("Accept") String accept,
+	public ResponseEntity<?> getAllMagicThereIs(
+			@RequestHeader("Accept") String accept,
 			@RequestParam("key") Optional<String> key) {
 
 		if (key.isPresent()) {
@@ -72,7 +75,8 @@ public class MagicController {
 	}
 
 	@GetMapping(value = "/magic", produces = { LDMediaTypes.TEXT_TURTLE, LDMediaTypes.RDF_XML, LDMediaTypes.JSON_LD })
-	public ResponseEntity<Model> getAllRDFMagicThereIs(@RequestHeader("Accept") String accept,
+	public ResponseEntity<Model> getAllRDFMagicThereIs(
+			@RequestHeader("Accept") String accept,
 			@RequestParam("key") Optional<String> key) {
 
 		Optional<Model> magicStuff;
