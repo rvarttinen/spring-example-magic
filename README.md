@@ -1,5 +1,5 @@
 # spring-example-magic
-A simple example of using Spring Boot with an external source of data converting it to RDF and storing it in a triple store. The data can be exposed in various formats by this service: 
+A simple example of using Spring Boot with an external source of data converting it to RDF and storing it locally in a triple store (Apache Jena TDB2). The data can be exposed in various formats by this service: 
 * RDF; Turtle, RDF/XML and JSON-LD
 * Regular formats like JSON and XML, without semantics
 * Maybe more on its way ... 
@@ -7,8 +7,8 @@ A simple example of using Spring Boot with an external source of data converting
 # Introduction
 This project has several purposes: 
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
-* base for experimentation using the latest and greatest of Java (currently 23) and other libraries used in this project
-* act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, etc.
+* base for experimentation using the latest and greatest of Java (currently 24, but resorted back to 23 as Gradle dosn't seem to support 24 yet) and other libraries used in this project
+* act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
 # Building and Running the service
 After checking out the code from this repository, building it should be straightforward. 
@@ -37,7 +37,8 @@ gradlew bootRun
 ```
 ./gradle bootRun
 ```
-It is also possible to load and execute htis code in your IDE of choice. It has been tested on Eclipse SDK (2024-09 Version: 4.33.0).  
+It is also possible to load and execute this code in your IDE of choice. It has been tested on Eclipse SDK (2024-09 Version: 4.33.0).  
+A frontend based on React is in the making. 
 
 # Issues
 When this service is started up it does not populate the Bloom Filter from the triple store. Until this is properly done (small fix!) it is recommended to delete the files under 'MyDatabases/DB1' after closing down the service. 
