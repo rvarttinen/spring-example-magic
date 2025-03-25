@@ -48,6 +48,8 @@ This is an experimental project, however, improvements will be made, including u
 
 Items on the current TODO-list: 
 - add a client/UI for exploring data visually; currently a React based frontend is being created. It will be exposed in a repository of its own. 
+- separate out the triple store to a separate service
+- if parts of this service is split up, it coyuld be deployed as several pods in a Kubernetes cluster (execute locally in MiniKube)
 - add a mechanism that reads any stored entries from previous sessions to the Bloom Filter
 - add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
 - see if we can make use of some interesting new features in Java: 
