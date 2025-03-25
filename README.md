@@ -49,15 +49,15 @@ This is an experimental project, however, improvements will be made, including u
 Items on the current TODO-list: 
 - add a client/UI for exploring data visually; currently a React based frontend is being created. It will be exposed in a repository of its own. 
 - separate out the triple store to a separate service
-- if parts of this service is split up, it coyuld be deployed as several pods in a Kubernetes cluster (execute locally in MiniKube)
+- if parts of this service is split up, it could be deployed as several pods in a Kubernetes cluster (executed locally in e.g. MiniKube)
 - add a mechanism that reads any stored entries from previous sessions to the Bloom Filter
 - add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
 - see if we can make use of some interesting new features in Java: 
-    - switch with pattern matching
-    - primitive types in patterns (instanceof and switch)
+    - switch with pattern matching (to a large extent done) 
+    - primitive types in patterns (instanceof and switch, on its way ...)
     - use a SequencedCollection where applicable 
     - ... more ...
-- expose a SPARQL-endpoint
+- expose a SPARQL-endpoint (if the triple store is executed in a seaprate service, it probably already has this or add a Apache Fuseki service pod if using TDB)
 - combine data from other sources?
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not required to be performant in any way)
 - collect utilities common to other projects into thier own repository (expose a util-library for reuse and avoid code duplication over several repos)
