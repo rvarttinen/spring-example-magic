@@ -42,14 +42,14 @@ import se.autocorrect.springexample.infrastructure.ExternalService;
 import se.autocorrect.springexample.util.Try;
 
 @Service("externalService")
-public class ExternalRestServiceClient implements ExternalService {
+public class BoredApiRestServiceClient implements ExternalService {
 	
     private final RestTemplate restTemplate;
     
-    @Value("${ext.api.baseurl}")
+    @Value("${bored.api.baseurl}")
     private String baseUrl;
     
-    ExternalRestServiceClient(RestTemplateBuilder restTemplateBuilder) {
+    BoredApiRestServiceClient(RestTemplateBuilder restTemplateBuilder) {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 

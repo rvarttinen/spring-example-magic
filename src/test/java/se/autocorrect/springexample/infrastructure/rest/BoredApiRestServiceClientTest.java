@@ -45,11 +45,11 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import se.autocorrect.springexample.infrastructure.ExternalMagic;
 
 @TestPropertySource(locations="classpath:application-test.properties")
-@RestClientTest(ExternalRestServiceClient.class)
-class ExternalRestServiceClientTest {
+@RestClientTest(BoredApiRestServiceClient.class)
+class BoredApiRestServiceClientTest {
 
 	@Autowired
-	private ExternalRestServiceClient client;
+	private BoredApiRestServiceClient client;
 
 	@Autowired
 	private MockRestServiceServer server;
