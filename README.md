@@ -46,6 +46,7 @@ When this service is started up it does not populate the Bloom Filter from the t
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
+- add a client/UI for exploring data visually; currently a React based frontend is being created. It will be exposed in a repository of its own. 
 - add a mechanism that reads any stored entries from previous sessions to the Bloom Filter
 - add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
 - see if we can make use of some interesting new features in Java: 
@@ -57,6 +58,5 @@ Items on the current TODO-list:
 - combine data from other sources?
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not required to be performant in any way)
 - collect utilities common to other projects into thier own repository (expose a util-library for reuse and avoid code duplication over several repos)
-- add a client/UI for exploring data visually? 
 - String templates was introduced as a preview in 21, but as of 23 the feature has been axed due to design flaws. So, we will not se any of those as we are on 23 ... 
 
