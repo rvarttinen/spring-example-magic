@@ -10,6 +10,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
+import org.mapstruct.util.Experimental;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import se.autocorrect.springexample.infrastructure.WikiDataToMagicFacade;
 import se.autocorrect.springexample.rdf.Magic;
 import se.autocorrect.springexample.util.RDFUtils;
 
+@Experimental
 @Service("asyncService")
 class DefaultAsyncService implements AsyncService {
 	
@@ -54,7 +56,7 @@ class DefaultAsyncService implements AsyncService {
 			
 		}else{
 			
-			result = CompletableFuture.completedFuture(null);
+			result = CompletableFuture.completedFuture(ModelFactory.createDefaultModel());
 		}
 		
 		

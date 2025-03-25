@@ -7,6 +7,7 @@ import java.util.concurrent.Executor;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.mapstruct.util.Experimental;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import se.autocorrect.springexample.rdf.LDMediaType;
 import se.autocorrect.springexample.rdf.LDMediaTypes;
 import se.autocorrect.springexample.services.AsyncService;
 
+@Experimental
 @RestController
 @RequestMapping("/v2")
 public class MagicAsynchController {
@@ -40,7 +42,7 @@ public class MagicAsynchController {
 			@RequestParam("key") Optional<String> key, 
 			@RequestHeader("Accept") String accept) throws InterruptedException, ExecutionException {
 
-		CompletableFuture<Model> listFuture = asyncService.listMagic();
+		CompletableFuture<Model> listFuture = key.isPresent() ? CompletableFuture.completedFuture(ModelFactory.createDefaultModel())  : asyncService.listMagic();
 		CompletableFuture<Model> wikiDataFuture = asyncService.listWikiDataMagic(key.orElse(NO_KEY));
 
 		CompletableFuture.allOf(listFuture, wikiDataFuture).join();
