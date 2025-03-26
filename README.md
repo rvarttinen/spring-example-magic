@@ -11,7 +11,7 @@ This project has several purposes:
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
 # History
-Everything has a history, even this little project. It started out a sa simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now hosued in this repositry. 
+Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this reposiotry. 
 However, in doing so it started move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
 
 # Building and Running the service
