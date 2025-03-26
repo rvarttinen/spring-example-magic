@@ -10,6 +10,10 @@ This project has several purposes:
 * base for experimentation using the latest and greatest of Java (currently 24, but resorted back to 23 as Gradle dosn't seem to support 24 yet) and other libraries used in this project
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
+# History
+Everything has a history, even this little project. It started out a sa simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now hosued in this repositry. 
+However, in doing so it started move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
+
 # Building and Running the service
 After checking out the code from this repository, building it should be straightforward. 
 In a Windows environment: 
@@ -57,9 +61,9 @@ Items on the current TODO-list:
     - primitive types in patterns (instanceof and switch, on its way ...)
     - use a SequencedCollection where applicable 
     - ... more ...
-- expose a SPARQL-endpoint (if the triple store is executed in a seaprate service, it probably already has this or add a Apache Fuseki service pod if using TDB)
-- combine data from other sources?
+- expose a SPARQL-endpoint (if the triple store is executed in a separate service, it probably already has this or add a Apache Fuseki service pod if using TDB)
+- combine data from other sources? 
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not required to be performant in any way)
 - collect utilities common to other projects into thier own repository (expose a util-library for reuse and avoid code duplication over several repos)
-- String templates was introduced as a preview in 21, but as of 23 the feature has been axed due to design flaws. So, we will not se any of those as we are on 23 ... 
+- String templates was introduced as a preview in 21, but as of 23 the feature seems to have been axed due to design flaws. So, we will not se any of those as we are on 23 ... 
 
