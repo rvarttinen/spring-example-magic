@@ -25,70 +25,72 @@ import se.autocorrect.springexample.util.RDFUtils;
 @Experimental
 @Service("asyncService")
 class DefaultAsyncService implements AsyncService {
-	
+
 	@NonNull
 	@Qualifier("boredToMagicService")
 	private final BoredToMagicServciceFacade boredToMagicServiceFacade;
-	
+
 	@NonNull
 	@Qualifier("wikiDataToMagicService")
 	private final WikiDataToMagicFacade wikiDataToMagicFacade;
 
-	DefaultAsyncService(BoredToMagicServciceFacade boredToMagicServiceFacade, WikiDataToMagicFacade wikiDataToMagicFacade) {
+	DefaultAsyncService(BoredToMagicServciceFacade boredToMagicServiceFacade,
+			WikiDataToMagicFacade wikiDataToMagicFacade) {
 		this.boredToMagicServiceFacade = boredToMagicServiceFacade;
 		this.wikiDataToMagicFacade = wikiDataToMagicFacade;
 	}
 
 	@Override
 	public CompletableFuture<Model> listMagic() throws InterruptedException {
-		
+
 		return CompletableFuture.completedFuture(listAllKnownMagic());
 	}
 
 	@Override
 	public CompletableFuture<Model> listWikiDataMagic(String key) throws InterruptedException {
-		
+
 		CompletableFuture<Model> result;
-		
-		if(key != MagicAsynchController.NO_KEY) {
-			
+
+		if (key != MagicAsynchController.NO_KEY) {
+
 			result = CompletableFuture.completedFuture(getSomeDataFromWikiData(key));
-			
-		}else{
-			
+
+		} else {
+
 			result = CompletableFuture.completedFuture(ModelFactory.createDefaultModel());
 		}
-		
-		
+
 		return result;
 	}
-	
+
 	private Model listAllKnownMagic() {
-		
+
 		List<ExternalMagic> allMagic = boredToMagicServiceFacade.listAllMagicInTripleStore();
 
-        final Optional<Model> defaultModel = RDFUtils.prepareDefaultModel();
+		final Optional<Model> defaultModel = RDFUtils.prepareDefaultModel();
 
-        defaultModel.ifPresent(model -> allMagic.forEach(externalMagic -> convertExtMagicToRDF(model, externalMagic)));
+		defaultModel.ifPresent(model -> allMagic.forEach(externalMagic -> convertExtMagicToRDF(model, externalMagic)));
 
-        return defaultModel.orElse(ModelFactory.createDefaultModel());
+		return defaultModel.orElse(ModelFactory.createDefaultModel());
 	}
 
 	private Model getSomeDataFromWikiData(String key) {
-		
-		Optional<ExternalMagic> wikiDataMagic = wikiDataToMagicFacade.getEntityData(key);
-		
+
 		Model model = ModelFactory.createDefaultModel();
-		
-		wikiDataMagic.ifPresent(externalMagic -> convertExtMagicToRDF(model, externalMagic));
-		
+
+		if (key.startsWith("Q")) {
+
+			Optional<ExternalMagic> wikiDataMagic = wikiDataToMagicFacade.getEntityData(key);
+			wikiDataMagic.ifPresent(externalMagic -> convertExtMagicToRDF(model, externalMagic));
+		}
+
 		return model;
 	}
-	
+
 	private void convertExtMagicToRDF(Model model, ExternalMagic externalMagic) {
-		
+
 		Resource magicResource = model.createResource(Magic.uri + externalMagic.key());
-		
+
 		magicResource.addProperty(RDF.type, Magic.Magic);
 		magicResource.addProperty(Magic.magicId, externalMagic.key());
 		magicResource.addProperty(Magic.magicDescription, externalMagic.activity());
@@ -97,5 +99,5 @@ class DefaultAsyncService implements AsyncService {
 		magicResource.addProperty(RDFS.label, Magic.Magic.getLocalName() + " " + externalMagic.activity());
 		magicResource.addProperty(Magic.magicType, externalMagic.type());
 	}
-	
+
 }

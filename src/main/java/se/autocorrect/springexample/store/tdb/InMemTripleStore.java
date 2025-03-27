@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.Optional;
 
 import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -36,7 +37,6 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.system.Txn;
-import org.apache.jena.tdb2.TDB2Factory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -49,8 +49,8 @@ import se.autocorrect.springexample.store.MagicToRDFConverter;
 import se.autocorrect.springexample.store.TripleStore;
 import se.autocorrect.springexample.util.Try;
 
-@Component("tdbStore")
-public class TDBTripleStore implements TripleStore {
+@Component("inMemStore")
+public class InMemTripleStore implements TripleStore {
 
 
 	@Value("${tdb.db.directory}")
@@ -61,7 +61,7 @@ public class TDBTripleStore implements TripleStore {
 	@PostConstruct
 	void init() {
 		
-		this.dataSet = TDB2Factory.connectDataset(directory);
+		this.dataSet = DatasetFactory.createTxnMem();
 		addMagicVocabulary();
 	}
 	
@@ -126,7 +126,7 @@ public class TDBTripleStore implements TripleStore {
 
 		Model defaultModel = dataSet.getDefaultModel();
 
-		InputStream resourceAsStream = TDBTripleStore.class.getResourceAsStream("/magic.ttl");
+		InputStream resourceAsStream = InMemTripleStore.class.getResourceAsStream("/magic.ttl");
 
 		Try.of(() -> defaultModel.read(resourceAsStream, Magic.getURI(), Lang.TURTLE.getName()));
 	}

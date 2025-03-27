@@ -26,7 +26,7 @@ public class WikiDataRestClient implements WikiDataService {
 	
 	private final RestTemplate restTemplate;
     
-    @Value("${wikidata.api.baseurl}")
+    @Value("${wikidata.api.baseurl:default}")
     private String baseUrl;
     
 	WikiDataRestClient(RestTemplateBuilder restTemplateBuilder) {

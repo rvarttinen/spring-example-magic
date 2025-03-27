@@ -22,7 +22,7 @@ public class WikiDataToMagicFacade {
 	private WikiDataService wikiDataService;
 
 	@NonNull
-	@Qualifier("tdbStore")
+	@Qualifier("inMemStore")
 	private TripleStore tripleStore;
 	
 
