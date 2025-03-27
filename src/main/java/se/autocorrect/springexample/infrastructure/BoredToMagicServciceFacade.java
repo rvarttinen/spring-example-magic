@@ -66,7 +66,7 @@ public class BoredToMagicServciceFacade {
     private ExternalService externalService;
 
     @NonNull
-    @Qualifier("tdbStore")
+    @Qualifier("inMemStore")
     private TripleStore tripleStore;
 
     @NonNull

@@ -46,7 +46,7 @@ public class BoredApiRestServiceClient implements ExternalService {
 	
     private final RestTemplate restTemplate;
     
-    @Value("${bored.api.baseurl}")
+    @Value("${bored.api.baseurl:default}")
     private String baseUrl;
     
     BoredApiRestServiceClient(RestTemplateBuilder restTemplateBuilder) {
