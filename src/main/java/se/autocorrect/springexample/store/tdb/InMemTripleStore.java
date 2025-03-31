@@ -37,7 +37,6 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.system.Txn;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -51,10 +50,6 @@ import se.autocorrect.springexample.util.Try;
 
 @Component("inMemStore")
 public class InMemTripleStore implements TripleStore {
-
-
-	@Value("${tdb.db.directory}")
-	private String directory;
 
 	private Dataset dataSet;
 

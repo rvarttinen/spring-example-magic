@@ -10,6 +10,20 @@ This project has several purposes:
 * base for experimentation using the latest and greatest of Java (currently 24, but resorted back to 23 as Gradle dosn't seem to support 24 yet) and other libraries used in this project
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
+# What is does
+The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memeory triple store. Keys are in the range [1000000, 9999999]. 
+
+If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
+
+By providing different values for the 'Accept'- header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
+* 'application/json', plain ol' JSON
+* 'text/xml', plain even older XML
+
+And, the supported RDF formats: 
+* 'application/json+ld', the JSON-LD format, JavaScript Object Notation for Linked Data
+* 'text/turtle', the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
+* 'application/rdf+xml' , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
+
 # History
 Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
 However, in doing so it started move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
@@ -45,8 +59,113 @@ gradlew bootRun
 
 It is also possible to load and execute this code in your IDE of choice. It has been tested on Eclipse SDK (2024-09 Version: 4.33.0). 
 
-# Issues
-When this service is started up it does not populate the Bloom Filter from the triple store. Until this is properly done (small fix!) it is recommended to delete the files under 'MyDatabases/DB1' after closing down the service. 
+# Docker 
+Containerizing the application is done using the following steps. Once a Docker image is available it can be deployed as single service in e.g Docker Desktop, or in a Kubernetes cluster. 
+
+### Building the Docker image
+Building a Docker image is pretty straight forward: 
+
+```
+gradlew bootBuildImage --imageName=autocorrect/spring-boot-magic
+```
+
+### Deploy to Docker Desktop
+Once the container is built, it is time for deployment: 
+
+```
+docker run -p 8888:8080 -t autocorrect/spring-boot-magic:latest
+```
+
+### Testing the deployed container
+As the Tomcat web container bundled with Spring Boot exposes the service on port 8080 by default. In the example below has that port mapped to 8888 instead. 
+
+```
+docker run -p 8080:8888 -t autocorrect/spring-boot-magic:latest
+```
+
+Use PostMan or your client of choice to check that the service is responding: 
+
+```
+curl --location 'http://localhost:8080/v1/magic?key=3943506' \
+--header 'Accept: text/turtle'
+```
+Sometimes, like using the 'cmder' command line tool on Windows might render an error satting the port number should be number. 
+
+```
+curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+```
+Try replacing the single (') quotes with double quotes (") and it should work. 
+
+### Deploy to a Kubernetes cluster
+
+Once the the Docker image is verified it can also be deployed to Kubernetes cluster. In this example we will make a simple deploy to a locally running Minikube installation. 
+
+More on [minikube](https://minikube.sigs.k8s.io/docs/)
+
+For our convenience a deployment YAML-file for Kubernetes is already created in this repository. Further the latest version of the Docker image is available on Docker Hub. The [deployment.yaml](./deployment.yaml) points to this image on Docker Hub. However, if you want to create your own you can either: 
+* push your image to a local Docker repository (can be a bit cumbersome as you also need a proxy running for our container), or ..
+* ... push it to your own repository on Docker Hub 
+
+If you want to check the details on how to create and deploy a Kubernetes deployment for Spring Boot you can read more: [Guide: Spring Boot Kubernetes](https://spring.io/guides/gs/spring-boot-kubernetes)
+
+Start your Minikube cluster: 
+
+```
+minikube start
+```
+Running the Minikube Dashboard will render a UI in your default browser. It is not necessary as all commands can be executed on the command line, but maybe visuaully more pleasing. 
+
+```
+minikube dashboard
+```
+
+Once you have a Docker image available, locally or on Docker Hub, it can be deployed:
+
+```
+kubectl apply -f deployment.yaml
+```
+Check that your pod has started and is up and running (or check in the dashboard). 
+
+```
+kubectl get pods
+```
+Executing the following command will tell us whether our service is available: 
+
+```
+kubectl get all
+```
+The console printout will look like something like this: 
+
+```
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/demo-6476c974bd-rxkjx   1/1     Running   0          68m
+
+NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/demo         ClusterIP   10.109.8.245   <none>        8080/TCP   2d23h
+service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP    2d23h
+
+NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/demo   1/1     1            1           114m
+
+NAME                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/demo-6476c974bd   1         1         1       101m
+replicaset.apps/demo-bf9496f7f    0         0         0       114m
+```
+The service is running there is no port forwarding so the following is needed (recommendation: execute the following command in a separate console window or tab as it locks the console): 
+
+```
+kubectl port-forward svc/demo 8080:8080
+```
+... accessing the service using PostMan or the 'curl' command as above will render something like this on the console:
+
+```
+Forwarding from 127.0.0.1:8080 -> 8080
+Forwarding from [::1]:8080 -> 8080
+Handling connection for 8080
+Handling connection for 8080
+Handling connection for 8080
+```
+
 
 # Further improvements ... 
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
@@ -64,7 +183,7 @@ Items on the current TODO-list:
     - ... more ...
 - expose a SPARQL-endpoint (if the triple store is executed in a separate service, it probably already has this or add a Apache Fuseki service pod if using TDB)
 - combine data from other sources? 
-- introduce Futures for handling incoming requests (to experiment codewise, this service is not really required to be performant in any way)
-- collect utilities common to other projects into thier own repository (expose a util-library for reuse and avoid code duplication over several repos)
+- introduce Futures for handling incoming requests (to experiment codewise, this service is not really required to be that performant in any way)
+- collect utilities common to other projects into their own repository (expose a util-library for reuse and avoid code duplication over several repos)
 - String templates was introduced as a preview in 21, but as of 23 the feature seems to have been axed due to alleged design flaws. So, we will unfortunately not se any of those as we are on 23, for now ... 
 
