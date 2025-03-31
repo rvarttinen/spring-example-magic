@@ -1,5 +1,5 @@
 # spring-example-magic
-A simple example of using Spring Boot with an external source of data converting it to RDF and storing it locally in a triple store (Apache Jena TDB2). The data can be exposed in various formats by this service: 
+A simple example of using Spring Boot with an external source of data converting it to RDF and storing it locally in a triple store (Apache Jena). The data can be exposed in various formats by this service: 
 * RDF; Turtle, RDF/XML and JSON-LD
 * Regular formats like JSON and XML, without semantics
 * Maybe more on its way ... 
@@ -25,6 +25,11 @@ And, the supported RDF formats:
 * 'application/rdf+xml' , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
 As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also. ,there are some other ideas of creating a mechanism for populating the store with a specified number of entries when invoked. 
+
+Some example keys that can be used: 
+* 4290333 - "Go on a long drive with no music" 
+* 6204657 - "Surprise your significant other with something considerate"
+* 3943506 - "Learn Express.js"
 
 # History
 Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
@@ -169,6 +174,7 @@ Handling connection for 8080
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
+- there are some bugs in the porocess of applying semantics and storing entries that needs to be fixed (seems to be a mixup of keys)
 - create a mechanism for populating the triple store with a specified number of random entries
 - introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
 - add a client/UI for exploring data visually; currently a React based frontend is being created. It will be harbored in a repository of its own. 
