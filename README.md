@@ -11,7 +11,7 @@ This project has several purposes:
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
 # What is does
-The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memeory triple store. Keys are in the range [1000000, 9999999]. 
+The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. 
 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
@@ -77,13 +77,9 @@ docker run -p 8888:8080 -t autocorrect/spring-boot-magic:latest
 ```
 
 ### Testing the deployed container
-As the Tomcat web container bundled with Spring Boot exposes the service on port 8080 by default. In the example below has that port mapped to 8888 instead. 
+As the Tomcat web container bundled with Spring Boot exposes the service on port 8080 by default. 
 
-```
-docker run -p 8080:8888 -t autocorrect/spring-boot-magic:latest
-```
-
-Use PostMan or your client of choice to check that the service is responding: 
+Use PostMan or your client of choice to check that the service is responding. using 'curl': 
 
 ```
 curl --location 'http://localhost:8080/v1/magic?key=3943506' \
@@ -102,7 +98,7 @@ Once the the Docker image is verified it can also be deployed to Kubernetes clus
 
 More on [minikube](https://minikube.sigs.k8s.io/docs/)
 
-For our convenience a deployment YAML-file for Kubernetes is already created in this repository. Further the latest version of the Docker image is available on Docker Hub. The [deployment.yaml](./deployment.yaml) points to this image on Docker Hub. However, if you want to create your own you can either: 
+For our convenience a deployment YAML-file for Kubernetes is already created in this repository. Further, the latest version of the Docker image is available on Docker Hub. The [deployment.yaml](./deployment.yaml) points to this image on Docker Hub. However, if you want to create your own you can either: 
 * push your image to a local Docker repository (can be a bit cumbersome as you also need a proxy running for our container), or ..
 * ... push it to your own repository on Docker Hub 
 
@@ -151,7 +147,7 @@ NAME                              DESIRED   CURRENT   READY   AGE
 replicaset.apps/demo-6476c974bd   1         1         1       101m
 replicaset.apps/demo-bf9496f7f    0         0         0       114m
 ```
-The service is running there is no port forwarding so the following is needed (recommendation: execute the following command in a separate console window or tab as it locks the console): 
+The service is running, but there is no port forwarding so the following is needed (recommendation: execute the following command in a separate console window or tab as it locks the console): 
 
 ```
 kubectl port-forward svc/demo 8080:8080
