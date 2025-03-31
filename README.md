@@ -11,7 +11,7 @@ This project has several purposes:
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
 # What is does
-The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. 
+The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local one, otherwise an external fetch is performed). 
 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
@@ -24,9 +24,11 @@ And, the supported RDF formats:
 * 'text/turtle', the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
 * 'application/rdf+xml' , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
+As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also. ,there are some other ideas of creating a mechanism for populating the store with a specified number of entries when invoked. 
+
 # History
 Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
-However, in doing so it started move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
+However, in doing so it started slowly move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
 
 # Building and Running the service
 After checking out the code from this repository, building it should be straightforward. 
@@ -73,11 +75,11 @@ gradlew bootBuildImage --imageName=autocorrect/spring-boot-magic
 Once the container is built, it is time for deployment: 
 
 ```
-docker run -p 8888:8080 -t autocorrect/spring-boot-magic:latest
+docker run -p 8080:8080 -t autocorrect/spring-boot-magic:latest
 ```
 
 ### Testing the deployed container
-As the Tomcat web container bundled with Spring Boot exposes the service on port 8080 by default. 
+The Tomcat web container bundled with Spring Boot exposes the service on port 8080 by default. 
 
 Use PostMan or your client of choice to check that the service is responding. using 'curl': 
 
@@ -85,7 +87,7 @@ Use PostMan or your client of choice to check that the service is responding. us
 curl --location 'http://localhost:8080/v1/magic?key=3943506' \
 --header 'Accept: text/turtle'
 ```
-Sometimes, like using the 'cmder' command line tool on Windows might render an error satting the port number should be number. 
+Sometimes, like using the 'cmder' command line tool on Windows might render an error setting the port number should be number. 
 
 ```
 curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
@@ -152,7 +154,7 @@ The service is running, but there is no port forwarding so the following is need
 ```
 kubectl port-forward svc/demo 8080:8080
 ```
-... accessing the service using PostMan or the 'curl' command as above will render something like this on the console:
+... accessing the service using e.g. PostMan or the 'curl' command as above will render something like this on the console:
 
 ```
 Forwarding from 127.0.0.1:8080 -> 8080
@@ -167,10 +169,12 @@ Handling connection for 8080
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
+- create a mechanism for populating the triple store with a specified number of random entries
+- introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
 - add a client/UI for exploring data visually; currently a React based frontend is being created. It will be harbored in a repository of its own. 
 - separate out the triple store to a separate service
 - if parts of this service is split up, it could be deployed as several pods in a Kubernetes cluster (executed locally in e.g. MiniKube)
-- add a mechanism that reads any stored entries from previous sessions into the Bloom Filter
+- add a mechanism that reads any stored entries from previous sessions into the Bloom filter when using TDB (file persistence) 
 - add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
 - see if we can make use of some interesting new features in Java: 
     - switch with pattern matching (to a large extent already done) 
