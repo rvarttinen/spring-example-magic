@@ -24,7 +24,7 @@ And, the supported RDF formats:
 * 'text/turtle', the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
 * 'application/rdf+xml' , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
-As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also. ,there are some other ideas of creating a mechanism for populating the store with a specified number of entries when invoked. 
+As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also, there are some other ideas of creating a mechanism for populating the store with a specified number of entries when invoked. 
 
 Some example keys that can be used: 
 * 4290333 - "Go on a long drive with no music" 
@@ -159,7 +159,7 @@ The service is running, but there is no port forwarding so the following is need
 ```
 kubectl port-forward svc/demo 8080:8080
 ```
-... accessing the service using e.g. PostMan or the 'curl' command as above will render something like this on the console:
+... accessing the service using e.g. PostMan or the 'curl' command as above will render something like this on the console with port forwarding:
 
 ```
 Forwarding from 127.0.0.1:8080 -> 8080
