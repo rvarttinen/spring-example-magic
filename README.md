@@ -177,8 +177,9 @@ Items on the current TODO-list:
 - there are some bugs in the porocess of applying semantics and storing entries that needs to be fixed (seems to be a mixup of keys)
 - create a mechanism for populating the triple store with a specified number of random entries
 - introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
-- add a client/UI for exploring data visually; currently a React based frontend is being created. It will be harbored in a repository of its own. 
+- add a client/UI for exploring data visually; currently a React based frontend is being worked on. It is harbored in a [repository of its own.](https://github.com/rvarttinen/react-example-magic) 
 - separate out the triple store to a separate service
+- maybe add OAuth2 authentication to make the whole thing more production like? One could, e.g., login using one's account on GitHub. 
 - if parts of this service is split up, it could be deployed as several pods in a Kubernetes cluster (executed locally in e.g. MiniKube)
 - add a mechanism that reads any stored entries from previous sessions into the Bloom filter when using TDB (file persistence) 
 - add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
