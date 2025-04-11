@@ -15,7 +15,7 @@ The example/demo service is really simple; it will retrieve an entry from the [B
 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
-By providing different values for the 'Accept'- header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
+By providing different values for the `Accept`- header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
 * `application/json`, plain ol' JSON
 * `text/xml`, plain even older XML
 
@@ -86,7 +86,7 @@ docker run -p 8080:8080 -t autocorrect/spring-boot-magic:latest
 ### Testing the deployed container
 The Tomcat web container bundled with Spring Boot exposes the service on port 8080 by default. 
 
-Use PostMan or your client of choice to check that the service is responding. using 'curl': 
+Use PostMan or your client of choice to check that the service is responding. If you prefer using `curl`: 
 
 ```
 curl --location 'http://localhost:8080/v1/magic?key=3943506' \
@@ -188,7 +188,7 @@ Items on the current TODO-list:
     - primitive types in patterns (instanceof and switch, on its way ...)
     - use a SequencedCollection where applicable 
     - ... more ...
-- expose a SPARQL-endpoint (if the triple store is executed in a separate service, it probably already has this or add a Apache Fuseki service pod if using TDB)
+- expose a SPARQL-endpoint (if the triple store is executed in a separate service, it probably already has this or add an Apache Fuseki service pod if using TDB)
 - combine data from other sources? 
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not really required to be that performant in any way)
 - collect utilities common to other projects into their own repository (expose a util-library for reuse and avoid code duplication over several repos)

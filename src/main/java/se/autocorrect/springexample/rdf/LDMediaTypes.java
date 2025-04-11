@@ -26,7 +26,7 @@
 package se.autocorrect.springexample.rdf;
 
 /**
- * The Linked, Semantic, Data media types. TRhese are used when accessing data
+ * The Linked, Semantic, Data media types. These are used when accessing data
  * over the net (Accept and Content-Type headers) and forms the base for the
  * corresponding enum denoting the same.
  */

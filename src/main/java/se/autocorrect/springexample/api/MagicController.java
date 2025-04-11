@@ -73,7 +73,7 @@ public class MagicController {
 
 		return listAllMagic(accept);
 	}
-
+ 
 	@GetMapping(value = "/magic", produces = { LDMediaTypes.TEXT_TURTLE, LDMediaTypes.RDF_XML, LDMediaTypes.JSON_LD })
 	public ResponseEntity<Model> getAllRDFMagicThereIs(
 			@RequestHeader("Accept") String accept,
