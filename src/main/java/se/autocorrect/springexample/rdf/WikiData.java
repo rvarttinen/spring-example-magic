@@ -4,6 +4,11 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
+/**
+ * An attempt to create a local version of the Wikidata vocabulary. It has no
+ * corresponding vocabulary file, but can be used when interpreting data
+ * received from Wikidata.
+ */
 public class WikiData {
 
 	private WikiData() {}
@@ -81,7 +86,13 @@ public class WikiData {
     public static final Property P443 = Init.pronounciationAudio();
 	
     public static final Property P31D = Init.instanceOfDirect();
-    
+
+	/**
+	 * WikiData constants may be used during Apache Jena initialization. If that
+	 * initialization is triggered by touching the {@code WikiData} class, then the
+	 * constants are null. So for these cases, call this helper class:
+	 * Init.function()
+	 */
     static class Init {
 
     	public static Resource article() {
