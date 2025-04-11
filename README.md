@@ -16,13 +16,13 @@ The example/demo service is really simple; it will retrieve an entry from the [B
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
 By providing different values for the 'Accept'- header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
-* 'application/json', plain ol' JSON
-* 'text/xml', plain even older XML
+* `application/json`, plain ol' JSON
+* `text/xml`, plain even older XML
 
 And, the supported RDF formats: 
-* 'application/json+ld', the JSON-LD format, JavaScript Object Notation for Linked Data
-* 'text/turtle', the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
-* 'application/rdf+xml' , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
+* `application/json+ld`, the JSON-LD format, JavaScript Object Notation for Linked Data
+* `text/turtle`, the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
+* `application/rdf+xml` , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
 As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also, there are some other ideas of creating a mechanism for populating the store with a specified number of entries when invoked. 
 
