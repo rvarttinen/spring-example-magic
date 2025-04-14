@@ -52,7 +52,7 @@ public interface Monad<T> {
 
 	/**
 	 * Transforms the current held value of type {@code T} to a new value of type
-	 * {@code R} wrapped in a new monad.
+	 * {@code R} wrapped in a new monad. This method is also known as a binding.
 	 *
 	 * @param function function to apply
 	 * @param <R>      the new type
