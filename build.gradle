@@ -19,24 +19,25 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter'			// The regular starter
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'	// Adding HATEOAS/REST
+	implementation 'org.springframework.boot:spring-boot-starter-aop'		// Adding Aspects to the picture
+	implementation 'org.springframework.boot:spring-boot-starter-graphql'	// Adding GraphQL capabilities
 	
-	implementation 'org.apache.jena:apache-jena-libs:5.3.0'	
-	implementation 'org.apache.jena:jena-querybuilder:5.3.0'
+	implementation 'org.apache.jena:apache-jena-libs:5.3.0'					// The regular lib for RDF
+	implementation 'org.apache.jena:jena-querybuilder:5.3.0'				// The Query builders for RDF
 	
 	// Spring Boot is opinionated in several ways, of one is delivering only JSON out-of-the-box by default
 	// This dependecy added for suppot of XML ... 
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3'
 	
-	implementation 'org.mapstruct:mapstruct:1.6.3'
-	implementation 'com.google.guava:guava:33.4.0-jre'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+	implementation 'org.mapstruct:mapstruct:1.6.3'							// The mapper between diffetrent structures
+	implementation 'com.google.guava:guava:33.4.0-jre'						// Some common and useful utilities
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'			// The Mapstruct annotation processor
 	
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'	// Test capabilties for Spring Boot
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'			
+	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'		// Mapstruct annotation process for test code
 }
 
 task fatJar(type: Jar) {
