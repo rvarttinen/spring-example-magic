@@ -31,7 +31,7 @@ Some example keys that can be used for interesting results:
 * 6204657 - "Surprise your significant other with something considerate"
 * 3943506 - "Learn Express.js"
 
-There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for `INFO`. Using an aspect for logging is maybe not that obvious, it can be hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements, and this is a kind of demo anyway. The project is not that large ... yet. 
+There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for the log level `INFO`. Using an aspect for logging is maybe not that obvious, it can be sometimes hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements and keep it somewhat clean, and this is a kind of demo anyway. The project is not that large ... yet. 
 
 The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. 
 
