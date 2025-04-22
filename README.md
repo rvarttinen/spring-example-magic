@@ -15,7 +15,7 @@ The example/demo service is really simple; it will retrieve an entry from the [B
 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
-By providing different values for the `Accept`-header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
+By providing different values for the `Accept`-header when making a `GET` request will render corresponding format for the data retrieved. Currently supported formats: 
 * `application/json`, plain ol' JSON
 * `text/xml`, plain even older XML
 
@@ -32,6 +32,8 @@ Some example keys that can be used for interesting results:
 * 3943506 - "Learn Express.js"
 
 There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for the log level `INFO`. Using an aspect for logging is maybe not that obvious, it can be sometimes hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements and keep it somewhat clean, and this is a kind of demo anyway. The project is not that large ... yet. 
+
+Also, when it comes to logging: all incoming request are furnished with Mapped Diagnostic Context (MDC) so the call chain of method invocations through the application can easily be followed if there are multiple simultaneous incoming requests. Check the `logback-spring.xml` file, the value appears as `traceId`. The class `RequestLoggingFilter` is invoked for each incoming request and produces a trace id for this purpose. 
 
 The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. 
 
