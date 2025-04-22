@@ -22,5 +22,8 @@ public class RequestLoggingFilter implements Filter {
 		String traceId = UUID.randomUUID().toString();
 		MDC.put("traceId", traceId);
 		chain.doFilter(request, response);
+
+		// TODO: do some extra logging here if you want to see some info logging
+		// (instead of the default debug).
 	}
 }
