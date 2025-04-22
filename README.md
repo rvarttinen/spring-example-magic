@@ -15,7 +15,7 @@ The example/demo service is really simple; it will retrieve an entry from the [B
 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
-By providing different values for the `Accept`- header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
+By providing different values for the `Accept`-header when making a 'GET' request will render corresponding format for the data retrieved. Currently supported formats: 
 * `application/json`, plain ol' JSON
 * `text/xml`, plain even older XML
 
@@ -24,12 +24,16 @@ And, the supported RDF formats:
 * `text/turtle`, the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
 * `application/rdf+xml` , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
-As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also, there are some other ideas of creating a mechanism for populating the store with a specified number of entries when invoked. 
+As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also, there are some other ideas of creating a mechanism for populating the store with a specified number of random entries when invoked. 
 
-Some example keys that can be used: 
+Some example keys that can be used for interesting results: 
 * 4290333 - "Go on a long drive with no music" 
 * 6204657 - "Surprise your significant other with something considerate"
 * 3943506 - "Learn Express.js"
+
+There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for `INFO`. Using an aspect for logging is maybe not that obvious, it can be hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements, and this is a kind of demo anyway. The project is not that large ... yet. 
+
+The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. 
 
 # History
 Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
@@ -52,6 +56,7 @@ Building the code will also execute the tests in the project.
 
 It is recommended to use a tool like Postman (https://www.postman.com/downloads/) to make invocations to the service and try different 'Accept' headers to see the results. 
 A frontend based on React is in the making. 
+
 Running the service in an Windows environment: 
 
 ```
@@ -182,7 +187,6 @@ Items on the current TODO-list:
 - maybe add OAuth2 authentication to make the whole thing more production like? One could, e.g., login using one's account on GitHub. 
 - if parts of this service is split up, it could be deployed as several pods in a Kubernetes cluster (executed locally in e.g. MiniKube)
 - add a mechanism that reads any stored entries from previous sessions into the Bloom filter when using TDB (file persistence) 
-- add logging. There are some ideas of how to do this using monads, i.e. from a 'Try' chain some other monad that takes care of any logging
 - see if we can make use of some interesting new features in Java: 
     - switch with pattern matching (to a large extent already done) 
     - primitive types in patterns (instanceof and switch, on its way ...)
