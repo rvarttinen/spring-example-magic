@@ -12,7 +12,7 @@ This project has several purposes:
 * act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
 
 # What is does
-The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
+The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
 
 ### Regular REST, with and without RDF 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
@@ -42,7 +42,7 @@ Some example keys that can be used for interesting results:
 * 3943506 - "Learn Express.js"
 
 ### GraphQL endpoint
-A GraphQL end point has been added recently. The GraphiQL capability is activated in the `application.proeprties` file, thus executing queries can be done by pointing your web browser of choice to: 
+A GraphQL end point has been added recently. The GraphiQL capability is activated in the `application.properties` file, thus executing queries can be done by pointing your web browser of choice to: 
 
 ```
 http://localhost:8888/graphiql
