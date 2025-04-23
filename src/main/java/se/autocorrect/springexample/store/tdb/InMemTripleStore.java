@@ -49,7 +49,7 @@ import se.autocorrect.springexample.store.TripleStore;
 import se.autocorrect.springexample.util.Try;
 
 @Component("inMemStore")
-public class InMemTripleStore implements TripleStore {
+public class InMemTripleStore implements TripleStore, JenaDataSetHolder {
 
 	private Dataset dataSet;
 
@@ -63,6 +63,11 @@ public class InMemTripleStore implements TripleStore {
 	@PreDestroy
 	void tearDown() {
 		dataSet.close();
+	}
+	
+	@Override
+	public Dataset getDataSet() {
+		return dataSet;
 	}
 
 	@Override

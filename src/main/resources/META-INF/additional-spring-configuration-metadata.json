@@ -6,7 +6,7 @@
   },
   {
     "name": "rdf.fuseki.enabled",
-    "type": "java.lang.String",
+    "type": "java.lang.Boolean",
     "description": "Indictaes whether a Fuseki SPARQL endpoint server should be started up or not."
   },
   {
@@ -17,6 +17,11 @@
   {
     "name": "wikidata.api.baseurl",
     "type": "java.lang.String",
-    "description": "Indicates the location,m URL, of the WikiData API."
+    "description": "Indicates the location, URL, of the WikiData API."
+  },
+  {
+    "name": "rdf.fuseki.port",
+    "type": "java.lang.Integer",
+    "description": "Indictaes whether a Fuseki SPARQL endpoint port to be used if Fuseki is enabled. "
   }
 ]}
