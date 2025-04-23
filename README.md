@@ -13,7 +13,16 @@ This project has several purposes:
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and stores it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
 
+### Regular REST, with and without RDF 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
+
+Use PostMan or your client of choice to perform request invocations to the service. By altering the `Accept`-header you may get different formats of the response of interest. 
+If you prefer using `curl`: 
+
+```
+curl --location 'http://localhost:8080/v1/magic?key=3943506' \
+--header 'Accept: text/turtle'
+```
 
 By providing different values for the `Accept`-header when making a `GET` request will render corresponding format for the data retrieved. Currently supported formats: 
 * `application/json`, plain ol' JSON
@@ -31,6 +40,40 @@ Some example keys that can be used for interesting results:
 * 6204657 - "Surprise your significant other with something considerate"
 * 3943506 - "Learn Express.js"
 
+### GraphQl endpoint
+A GraphQL end point has been added recently. The GraphiQL capability is activated in the `application.proeprties` file, thus executing queries can be done by pointing your web browser of choice to: 
+
+```
+http://localhost:8888/graphiql
+```
+By "populating" the triple store, e.g. by providing a key "6204657" using Postman or curl, a query like below:
+
+```
+query magicDetails {
+  magicByKey(key: "6204657") {
+    id
+    magicString
+    type
+  }
+```
+.. will render an intersting result like: 
+
+```
+q{
+  "data": {
+    "magicByKey": {
+      "id": "6204657",
+      "magicString": "Surprise your significant other with something considerate",
+      "type": "social"
+    }
+  }
+}
+```
+Compare that with the other results when invoking `GET` requests with various `Accept`-hreaders. 
+
+Please keep in mind that the GraphQL capabilities was recently added and is a work in progress (as the entire app for that matter), as more, and more complex, things will come soon. 
+
+### Logging to the console
 There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for the log level `INFO`. Using an aspect for logging is maybe not that obvious, it can be sometimes hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements and keep it somewhat clean, and this is a kind of demo anyway. The project is not that large ... yet. 
 
 Also, when it comes to logging: all incoming request are furnished with Mapped Diagnostic Context (MDC) so the call chain of method invocations through the application can easily be followed if there are multiple simultaneous incoming requests. Check the `logback-spring.xml` file, the value appears as `traceId`. The class `RequestLoggingFilter` is invoked for each incoming request and produces a trace id for this purpose. 
