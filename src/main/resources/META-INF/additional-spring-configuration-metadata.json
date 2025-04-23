@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "tdb.db.directory",
+    "type": "java.lang.String",
+    "description": "Indicates which directory to use for a TDB TripleStore, i.e. location of the database files"
+  },
+  {
+    "name": "rdf.fuseki.enabled",
+    "type": "java.lang.String",
+    "description": "Indictaes whether a Fuseki SPARQL endpoint server should be started up or not."
+  },
+  {
+    "name": "bored.api.baseurl",
+    "type": "java.lang.String",
+    "description": "Indicates the external location, base URL, of the BoredAPI."
+  },
+  {
+    "name": "wikidata.api.baseurl",
+    "type": "java.lang.String",
+    "description": "Indicates the location,m URL, of the WikiData API."
+  }
+]}
