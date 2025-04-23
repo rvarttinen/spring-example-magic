@@ -124,7 +124,7 @@ public class BoredToMagicServciceFacade {
 
                 String uri = rdfNode.toString();
 
-                rdfNode = solution.get("magicType");
+                rdfNode = solution.get("originatingType");
                 String type = rdfNode.asLiteral().getString();
 
                 rdfNode = solution.get("magicDescription");
@@ -132,8 +132,8 @@ public class BoredToMagicServciceFacade {
 
                 ExternalMagic resultingMagic = ExternalMagic.of(
                         uri,
-                        type,
-                        descr);
+                        descr,
+                        type);
 
                 retVal.add(resultingMagic);
             });
