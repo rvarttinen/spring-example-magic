@@ -2,6 +2,7 @@
 A simple example of using Spring Boot with an external source of data converting it to RDF and storing it locally in a triple store (Apache Jena). The data can be exposed in various formats by this service: 
 * RDF; Turtle, RDF/XML and JSON-LD
 * Regular formats like JSON and XML, without semantics
+* Accepting GraphQL queries and corresponding responses
 * Maybe more on its way ... 
 
 # Introduction
@@ -40,7 +41,7 @@ Some example keys that can be used for interesting results:
 * 6204657 - "Surprise your significant other with something considerate"
 * 3943506 - "Learn Express.js"
 
-### GraphQl endpoint
+### GraphQL endpoint
 A GraphQL end point has been added recently. The GraphiQL capability is activated in the `application.proeprties` file, thus executing queries can be done by pointing your web browser of choice to: 
 
 ```
