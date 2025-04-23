@@ -9,7 +9,7 @@ A simple example of using Spring Boot with an external source of data converting
 This project has several purposes: 
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
 * base for experimentation using the latest and greatest of Java (currently 24, but resorted back to 23 as Gradle doesn't seem to support 24 yet) and other libraries used in this project
-* act as a repository of "nice-to-have" features on how to do things Spring Boot and RDF, i.e. implementation, testing, format conversion, asynch, etc.
+* act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
 
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
