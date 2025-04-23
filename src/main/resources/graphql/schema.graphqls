@@ -1,0 +1,9 @@
+type Query {
+	magicByKey(key: ID): Magic
+}
+
+type Magic {
+	id: ID
+	magicString:  String
+	type: String
+}
