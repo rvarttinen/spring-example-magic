@@ -190,8 +190,8 @@ public class BoredToMagicServciceFacade {
 
             ExternalMagic resultMagic = ExternalMagic.of(
                     objectId,
-                    objecttype,
-                    objectDescr);
+                    objectDescr,
+                    objecttype);
 
             return Optional.of(resultMagic);
         }
