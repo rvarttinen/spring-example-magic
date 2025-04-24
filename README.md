@@ -28,7 +28,7 @@ The example/demo service is really simple; it will retrieve an entry from the [B
 ### Regular REST, with and without RDF 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
-Use PostMan or your client of choice to perform request invocations to the service. By altering the `Accept`-header you may get different formats of the response of interest. 
+Use [PostMan](https://www.postman.com/downloads/) or your client of choice to perform request invocations to the service. By altering the `Accept`-header you may get different formats of the response of interest. 
 If you prefer using `curl`: 
 
 ```
@@ -90,7 +90,7 @@ There is a logging aspect taking care of logging in the `services` and `infrastr
 
 Also, when it comes to logging: all incoming request are furnished with Mapped Diagnostic Context (MDC) so the call chain of method invocations through the application can easily be followed if there are multiple simultaneous incoming requests. Check the `logback-spring.xml` file, the value appears as `traceId`. The class `RequestLoggingFilter` is invoked for each incoming request and produces a trace id for this purpose. 
 
-The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. 
+The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. If you want to try logging on other levels, like `INFO`; you could alter the `RequestLoggingFilter` class; add whatever logging statments necessary. 
 
 # History
 Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
