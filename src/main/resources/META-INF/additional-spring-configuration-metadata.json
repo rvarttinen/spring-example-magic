@@ -7,7 +7,7 @@
   {
     "name": "rdf.fuseki.enabled",
     "type": "java.lang.Boolean",
-    "description": "Indictaes whether a Fuseki SPARQL endpoint server should be started up or not."
+    "description": "Indicates whether a Fuseki SPARQL endpoint server should be started up or not."
   },
   {
     "name": "bored.api.baseurl",
@@ -22,6 +22,6 @@
   {
     "name": "rdf.fuseki.port",
     "type": "java.lang.Integer",
-    "description": "Indictaes whether a Fuseki SPARQL endpoint port to be used if Fuseki is enabled. "
+    "description": "Indicates whether a Fuseki SPARQL endpoint port to be used if Fuseki is enabled. "
   }
 ]}
