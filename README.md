@@ -1,6 +1,6 @@
 # spring-example-magic
 
-![](https://img.shields.io/badge/Java-blue) ![](https://img.shields.io/badge/RDF-orange) ![](https://img.shields.io/badge/JSON-black) ![](https://img.shields.io/badge/SPARQL-green) ![](https://img.shields.io/badge/GraphQL-yellow) 
+![](https://img.shields.io/badge/Java-blue) ![](https://img.shields.io/badge/RDF-orange) ![](https://img.shields.io/badge/JSON-black) ![](https://img.shields.io/badge/XML-white) ![](https://img.shields.io/badge/SPARQL-green) ![](https://img.shields.io/badge/GraphQL-yellow) 
 
 ![](https://img.shields.io/badge/Docker-blue) ![](https://img.shields.io/badge/Kubernetes-blue)
 
