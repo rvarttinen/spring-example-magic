@@ -45,7 +45,7 @@ Some example keys that can be used for interesting results:
 A GraphQL end point has been added recently. The GraphiQL capability is activated in the `application.properties` file, thus executing queries can be done by pointing your web browser of choice to: 
 
 ```
-http://localhost:8888/graphiql
+http://localhost:8080/graphiql
 ```
 By "populating" the triple store, e.g. by providing a key "6204657" using Postman or curl, a query like below:
 
