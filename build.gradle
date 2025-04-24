@@ -29,7 +29,7 @@ dependencies {
 	implementation 'org.apache.jena:jena-fuseki-main:5.3.0'					// The main lib for Fuseki (SPARQL endpoint)
 	
 	// Spring Boot is opinionated in several ways, whereas one is delivering only JSON out-of-the-box by default
-	// This dependecy added for suppot of XML ... 
+	// This dependecy added for support of XML ... 
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3'
 	
 	implementation 'org.mapstruct:mapstruct:1.6.3'							// The mapper between different structures
