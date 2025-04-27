@@ -236,7 +236,7 @@ Handling connection for 8080
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
-- expose the Magic vocabulary so it cn be referenced instead of as now, a temporary solution, populate default models with thte entire vocabulary
+- expose the Magic vocabulary so it can be referenced instead of as now, a temporary solution, appear in populated default models with thte entire vocabulary present
 - in order to makes things more interesting a GraphQL interface is in the process of being added. 
 - create a mechanism for populating the triple store with a specified number of random entries
 - introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
