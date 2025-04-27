@@ -45,6 +45,8 @@ And, the supported RDF formats:
 * `text/turtle`, the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
 * `application/rdf+xml` , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
+Compare that with the other results when invoking `GET` requests with various `Accept`-hreaders. 
+
 As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also, there are some other ideas of creating a mechanism for populating the store with a specified number of random entries when invoked. 
 
 Some example keys that can be used for interesting results: 
@@ -81,7 +83,6 @@ q{
   }
 }
 ```
-Compare that with the other results when invoking `GET` requests with various `Accept`-hreaders. 
 
 Please keep in mind that the GraphQL capabilities was recently added and is a work in progress (as the entire app for that matter), as more, and more complex, things will come soon. 
 
