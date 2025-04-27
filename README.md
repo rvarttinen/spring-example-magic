@@ -154,7 +154,7 @@ Use PostMan or your client of choice to check that the service is responding. If
 curl --location 'http://localhost:8080/v1/magic?key=3943506' \
 --header 'Accept: text/turtle'
 ```
-Sometimes, like using the 'cmder' command line tool on Windows might render an error setting the port number should be number. 
+Sometimes, like using the 'cmder' command line tool on Windows might render an error indicating the port number setting not bing a number, despite being an integer. 
 
 ```
 curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
