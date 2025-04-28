@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  *  
  */
-package se.autocorrect.springexample.config;
+package se.autocorrect.springexample.log;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;

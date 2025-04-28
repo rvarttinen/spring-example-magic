@@ -1,4 +1,4 @@
-package se.autocorrect.springexample.config;
+package se.autocorrect.springexample.log;
 
 import java.io.IOException;
 import java.util.UUID;
