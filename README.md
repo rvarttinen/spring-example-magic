@@ -127,7 +127,7 @@ gradlew bootRun
 ./gradle bootRun
 ```
 
-It is also possible to load and execute this code in your IDE of choice. It has been tested on Eclipse SDK (2024-09 Version: 4.33.0). 
+It is also possible to load and execute this code in your IDE of choice. It has been tested on Eclipse SDK (2025-03 4.35.0). 
 
 # Docker 
 Containerizing the application is done using the following steps. Once a Docker image is available it can be deployed as single service in e.g Docker Desktop, or in a Kubernetes cluster. 
@@ -237,11 +237,11 @@ Handling connection for 8080
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
-- expose the Magic vocabulary so it can be referenced instead of as now, a temporary solution, appear in populated default models with thte entire vocabulary present
+- expose the Magic vocabulary so it can be referenced instead of as now, a temporary solution, appear in populated default models with the entire vocabulary present
 - in order to makes things more interesting a GraphQL interface is in the process of being added. 
 - create a mechanism for populating the triple store with a specified number of random entries
 - introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
-- add a client/UI for exploring data visually; currently a React based frontend is being worked on. It is harbored in a [repository of its own.](https://github.com/rvarttinen/react-example-magic) 
+- add a client/UI for exploring data visually; currently a React based front-end is being worked on. It is harbored in a [repository of its own.](https://github.com/rvarttinen/react-example-magic) 
 - separate out the triple store to a separate service
 - maybe add OAuth2 authentication to make the whole thing more production like? One could, e.g., login using one's account on GitHub. 
 - if parts of this service is split up, it could be deployed as several pods in a Kubernetes cluster (executed locally in e.g. MiniKube)
