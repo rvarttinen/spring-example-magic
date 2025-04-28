@@ -45,6 +45,8 @@ And, the supported RDF formats:
 * `text/turtle`, the Terse RDF Triple Language (Turtle) format, more compact and readable than JSON-LD
 * `application/rdf+xml` , RDF/XML to express (i.e. serialize) an RDF graph as an XML document. Not so compact and not that readable ...
 
+Compare that with the other results when invoking `GET` requests with various `Accept`-hreaders. 
+
 As the triple store used in this experiment/demo service is an in-memory store, all its data will be lost when the service is closed. There are some ideas creating a persistent store that retains the data between sessions. Also, there are some other ideas of creating a mechanism for populating the store with a specified number of random entries when invoked. 
 
 Some example keys that can be used for interesting results: 
@@ -81,7 +83,6 @@ q{
   }
 }
 ```
-Compare that with the other results when invoking `GET` requests with various `Accept`-hreaders. 
 
 Please keep in mind that the GraphQL capabilities was recently added and is a work in progress (as the entire app for that matter), as more, and more complex, things will come soon. 
 
@@ -154,7 +155,7 @@ Use PostMan or your client of choice to check that the service is responding. If
 curl --location 'http://localhost:8080/v1/magic?key=3943506' \
 --header 'Accept: text/turtle'
 ```
-Sometimes, like using the 'cmder' command line tool on Windows might render an error setting the port number should be number. 
+Sometimes, like using the 'cmder' command line tool on Windows might render an error indicating the port number setting not bing a number, despite being an integer. 
 
 ```
 curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
@@ -236,7 +237,7 @@ Handling connection for 8080
 This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
 
 Items on the current TODO-list: 
-- there are some bugs in the process of applying semantics and storing entries that needs to be fixed (seems to be a mixup of keys)
+- expose the Magic vocabulary so it can be referenced instead of as now, a temporary solution, appear in populated default models with thte entire vocabulary present
 - in order to makes things more interesting a GraphQL interface is in the process of being added. 
 - create a mechanism for populating the triple store with a specified number of random entries
 - introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
