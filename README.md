@@ -14,6 +14,7 @@ A simple example of using Spring Boot with an external source of data converting
 * RDF; Turtle, RDF/XML and JSON-LD
 * Regular formats like JSON and XML, without semantics
 * Accepting GraphQL queries and corresponding responses
+* A SPARQL endpoint can be activated and accessed using a SPARQL-editor or the like
 * Maybe more on its way ... 
 
 # Introduction
