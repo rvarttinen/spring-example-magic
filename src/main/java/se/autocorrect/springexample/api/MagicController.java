@@ -42,10 +42,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import se.autocorrect.springexample.model.MagicStuff;
-import se.autocorrect.springexample.rdf.LDMediaType;
 import se.autocorrect.springexample.rdf.LDMediaTypes;
 import se.autocorrect.springexample.services.MagicRDFService;
 import se.autocorrect.springexample.services.MagicService;
+import se.autocorrect.springexample.util.HeaderContentTypeUtil;
 
 @RestController
 @RequestMapping("/v1")
@@ -90,7 +90,7 @@ public class MagicController {
 			magicStuff = Optional.of(magicRdfService.listAllMagic());
 		}
 
-		HttpHeaders headers = calculateLDContentTypeHeader(accept);
+		HttpHeaders headers = HeaderContentTypeUtil.calculateLDContentTypeHeader(accept);
 
 		return headers.isEmpty() ? new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE) : createOkReponse(magicStuff, headers);
 	}
@@ -99,7 +99,7 @@ public class MagicController {
 
 		Optional<MagicStuff> magicStuff = magicService.getMagicStuffByKey(key);
 
-		HttpHeaders headers = calculateContentTypeHeader(accept);
+		HttpHeaders headers = HeaderContentTypeUtil.calculateContentTypeHeader(accept);
 
 		return magicStuff
 				.map(stuff -> new ResponseEntity<>(stuff, headers, HttpStatus.OK))
@@ -110,7 +110,7 @@ public class MagicController {
 
 		List<MagicStuff> magicStuffList = magicService.listAllMagic();
 
-		HttpHeaders headers = calculateContentTypeHeader(accept);
+		HttpHeaders headers = HeaderContentTypeUtil.calculateContentTypeHeader(accept);
 
 		return magicStuffList.isEmpty() ?
 				new ResponseEntity<>(HttpStatus.NO_CONTENT) : 
@@ -122,33 +122,5 @@ public class MagicController {
 		Model model = magicStuff.orElse(ModelFactory.createDefaultModel());	
 		
 		return model.isEmpty() ? new ResponseEntity<Model>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(model, headers, HttpStatus.OK);
-	}
-
-	private HttpHeaders calculateContentTypeHeader(String accept) {
-
-		var headers = new HttpHeaders();
-
-		switch (accept) {
-
-		case MediaType.TEXT_XML_VALUE -> headers.setContentType(MediaType.TEXT_XML);
-		case MediaType.APPLICATION_JSON_VALUE -> headers.setContentType(MediaType.APPLICATION_JSON);
-		default -> headers.setContentType(MediaType.APPLICATION_JSON);
-		}
-
-		return headers;
-	}
-	
-	private HttpHeaders calculateLDContentTypeHeader(String accept) {
-
-		var headers = new HttpHeaders();
-
-		switch (accept) {
-
-		case LDMediaTypes.TEXT_TURTLE -> headers.setContentType(LDMediaType.TEXT_TURTLE.asMediaType());
-		case LDMediaTypes.JSON_LD -> headers.setContentType(LDMediaType.JSON_LD.asMediaType());
-		case LDMediaTypes.RDF_XML -> headers.setContentType(LDMediaType.RDF_XML.asMediaType());
-		}
-
-		return headers;
 	}
 }
