@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -79,7 +78,7 @@ public class MagicController {
 			@RequestHeader("Accept") String accept,
 			@RequestParam("key") Optional<String> key) {
 
-		Optional<Model> magicStuff;
+		Model magicStuff;
 
 		if (key.isPresent()) {
 
@@ -87,7 +86,7 @@ public class MagicController {
 
 		} else {
 
-			magicStuff = Optional.of(magicRdfService.listAllMagic());
+			magicStuff = magicRdfService.listAllMagic();
 		}
 
 		HttpHeaders headers = HeaderContentTypeUtil.calculateLDContentTypeHeader(accept);
@@ -117,9 +116,7 @@ public class MagicController {
 				new ResponseEntity<>(magicStuffList, headers, HttpStatus.OK);
 	}
 	
-	private ResponseEntity<Model> createOkReponse(Optional<Model> magicStuff, HttpHeaders headers) {
-		
-		Model model = magicStuff.orElse(ModelFactory.createDefaultModel());	
+	private ResponseEntity<Model> createOkReponse(Model model, HttpHeaders headers) {
 		
 		return model.isEmpty() ? new ResponseEntity<Model>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(model, headers, HttpStatus.OK);
 	}

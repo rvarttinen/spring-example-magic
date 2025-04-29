@@ -67,11 +67,11 @@ class DefaultAsyncService implements AsyncService {
 
 		List<ExternalMagic> allMagic = boredToMagicServiceFacade.listAllMagicInTripleStore();
 
-		final Optional<Model> defaultModel = RDFUtils.prepareDefaultModel();
+		final Model model = RDFUtils.prepareDefaultModel();
 
-		defaultModel.ifPresent(model -> allMagic.forEach(externalMagic -> convertExtMagicToRDF(model, externalMagic)));
+		allMagic.forEach(externalMagic -> convertExtMagicToRDF(model, externalMagic));
 
-		return defaultModel.orElse(ModelFactory.createDefaultModel());
+		return model;
 	}
 
 	private Model getSomeDataFromWikiData(String key) {

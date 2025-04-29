@@ -25,7 +25,6 @@
  */
 package se.autocorrect.springexample.util;
 
-import java.io.InputStream;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -68,12 +67,18 @@ public final class RDFUtils {
         return retVal;
     }
     
-    public static Optional<Model> prepareDefaultModel() {
+    public static Model prepareDefaultModel() {
 
         Model defaultModel = ModelFactory.createDefaultModel();
+        
+        defaultModel.setNsPrefix("xs", "http://www.w3.org/2001/XMLSchema#");
+        defaultModel.setNsPrefix("owl", "http://www.w3.org/2002/07/owl#");
+        defaultModel.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        defaultModel.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        defaultModel.setNsPrefix("dc", "http://purl.org/dc/terms/");
+        
+        defaultModel.setNsPrefix("magic", Magic.getURI());
 
-        InputStream resourceAsStream = RDFUtils.class.getResourceAsStream("/magic.ttl");
-
-        return Try.of( () -> defaultModel.read(resourceAsStream, Magic.getURI(), Lang.TURTLE.getName()) ).toOptional();
+        return defaultModel;
     }
 }

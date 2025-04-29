@@ -95,26 +95,23 @@ public class BoredToMagicServciceFacade {
         return getExternal(key);
     }
 
-    public Optional<Model> getExternalRDFMagicByKey(String key) {
+	public Model getExternalRDFMagicByKey(String key) {
 
-        if (bloomFilter.mightContain(key)) {
+		if (bloomFilter.mightContain(key)) {
 
-            Optional<Model> intMagicOp = getInternalRDF(key);
+			Model intMagicOp = getInternalRDF(key);
 
-            if (intMagicOp.isPresent()) {
+			return intMagicOp;
+		}
 
-                return intMagicOp;
-            }
-        }
-
-        return getExternalRDF(key);
-    }
+		return getExternalRDF(key);
+	}
 
     public List<ExternalMagic> listAllMagicInTripleStore() {
 
         List<ExternalMagic> retVal = new ArrayList<>();
         final Query query = createSelectAllQuery();
-        final Optional<Model> defaultModelOp = RDFUtils.prepareDefaultModel();
+        final Model model = RDFUtils.prepareDefaultModel();
 
         tripleStore.select(query, searchResult -> {
 
@@ -138,7 +135,7 @@ public class BoredToMagicServciceFacade {
                 retVal.add(resultingMagic);
             });
 
-            return defaultModelOp.orElseThrow();
+            return model;
         });
 
         return retVal;
@@ -150,9 +147,9 @@ public class BoredToMagicServciceFacade {
 
         Optional<Model> resultOp = tripleStore.select(query, searchResult -> {
 
-            Optional<Model> defaultModelOp = RDFUtils.prepareDefaultModel();
+            Model model = RDFUtils.prepareDefaultModel();
 
-            return getModel(key, defaultModelOp, searchResult);
+            return getModel(key, model, searchResult);
         });
 
         if (resultOp.isPresent()) {
@@ -210,9 +207,9 @@ public class BoredToMagicServciceFacade {
 
             ExternalMagic externalMagic = resultOp.get();
 
-            Optional<Model> defaultModelOp = RDFUtils.prepareDefaultModel();
+            Model model = RDFUtils.prepareDefaultModel();
 
-            defaultModelOp.ifPresent(model -> tripleStore.insert(externalMagic, s -> {
+            tripleStore.insert(externalMagic, s -> {
 
                 Resource resource = model.createResource(Magic.uri + key);
                 resource.addProperty(RDF.type, Magic.Magic);
@@ -222,69 +219,69 @@ public class BoredToMagicServciceFacade {
                 resource.addProperty(Magic.magicDescription, externalMagic.activity());
 
                 return model;
-            }));
+            });
         }
 
         return resultOp;
     }
 	
-	 private Optional<Model> getExternalRDF(String key) {
+	private Model getExternalRDF(String key) {
 
-	        Optional<ExternalMagic> resultOp = externalService.getExternalMagicByKey(key);
-	        Optional<Model> defaultModelOp = RDFUtils.prepareDefaultModel();
+		Model model = RDFUtils.prepareDefaultModel();
+		Optional<ExternalMagic> resultOp = externalService.getExternalMagicByKey(key);
 
-	        if (resultOp.isPresent()) {
-	        	
-	            // Add to the Bloom filter
-	            bloomFilter.put(key);
+		if (resultOp.isPresent()) {
 
-	            ExternalMagic externalMagic = resultOp.get();
+			// Add to the Bloom filter
+			bloomFilter.put(key);
 
-	            defaultModelOp.ifPresent(model -> tripleStore.insert(externalMagic, s -> {
+			ExternalMagic externalMagic = resultOp.get();
 
-	                Resource resource = model.createResource(Magic.uri + key);
-	                resource.addProperty(RDF.type, Magic.Magic);
-	                resource.addProperty(Magic.magicId, externalMagic.key());
-	                resource.addProperty(Magic.magicType, "internal");
-	                resource.addProperty(Magic.originatingType, externalMagic.type());
-	                resource.addProperty(Magic.magicDescription, externalMagic.activity());
+			tripleStore.insert(externalMagic, s -> {
 
-	                return model;
-	            }));
-	        }
+				Resource resource = model.createResource(Magic.uri + key);
+				resource.addProperty(RDF.type, Magic.Magic);
+				resource.addProperty(Magic.magicId, externalMagic.key());
+				resource.addProperty(Magic.magicType, "internal");
+				resource.addProperty(Magic.originatingType, externalMagic.type());
+				resource.addProperty(Magic.magicDescription, externalMagic.activity());
 
-	        return defaultModelOp;
-	    }
-	
-	 private Optional<Model> getInternalRDF(String key) {
+				return model;
+			});
+		}
 
-	        Query query = createSelectQueryFindByKey(key);
-	        Optional<Model> defaultModelOp = RDFUtils.prepareDefaultModel();
+		return model;
+	}
 
-	        tripleStore.select(query, searchResult -> getModel(key, defaultModelOp, searchResult));
+	private Model getInternalRDF(String key) {
 
-	        return defaultModelOp;
-	    }
-	
-	private Model getModel(String key, Optional<Model> defaultModelOp, ResultSet searchResult) {
+		Query query = createSelectQueryFindByKey(key);
+		Model defaultModelOp = RDFUtils.prepareDefaultModel();
 
-        searchResult.forEachRemaining(solution -> {
+		tripleStore.select(query, searchResult -> getModel(key, defaultModelOp, searchResult));
 
-            Resource r = defaultModelOp.orElseThrow().createResource(Magic.uri + key);
-            r.addProperty(RDF.type, Magic.Magic);
+		return defaultModelOp;
+	}
 
-            var rdfNode = solution.get("magicId");
-            r.addProperty(Magic.magicId, rdfNode);
+	private Model getModel(String key, Model model, ResultSet searchResult) {
 
-            rdfNode = solution.get("magicType");
-            r.addProperty(Magic.magicType, rdfNode);
+		searchResult.forEachRemaining(solution -> {
 
-            rdfNode = solution.get("magicDescription");
-            r.addProperty(Magic.magicDescription, rdfNode);
-        });
+			Resource r = model.createResource(Magic.uri + key);
+			r.addProperty(RDF.type, Magic.Magic);
 
-        return defaultModelOp.orElseThrow();
-    }
+			var rdfNode = solution.get("magicId");
+			r.addProperty(Magic.magicId, rdfNode);
+
+			rdfNode = solution.get("magicType");
+			r.addProperty(Magic.magicType, rdfNode);
+
+			rdfNode = solution.get("magicDescription");
+			r.addProperty(Magic.magicDescription, rdfNode);
+		});
+
+		return model;
+	}
 	
 	 private Query createSelectQueryFindByKey(String key) {
 

@@ -27,7 +27,6 @@ package se.autocorrect.springexample.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.jena.rdf.model.Model;
@@ -96,7 +94,7 @@ public class MagicRDFServiceTest {
 	@Test
 	void testListAllMagicEmptyResult() {
 		
-		Model expected = RDFUtils.prepareDefaultModel().orElse(null);
+		Model expected = RDFUtils.prepareDefaultModel();
 		List<ExternalMagic> magicList = Collections.emptyList();
 		
 		when(boredToMagicServiceFacade.listAllMagicInTripleStore()).thenReturn(magicList);
@@ -116,33 +114,31 @@ public class MagicRDFServiceTest {
 		MagicStuff expectedStuff = MagicStuff.of("key", "activity", "type");
 		Model expected = createModel(Collections.singletonList(expectedStuff));
 		
-		when(boredToMagicServiceFacade.getExternalRDFMagicByKey(eq(key))).thenReturn(Optional.of(expected));
+		when(boredToMagicServiceFacade.getExternalRDFMagicByKey(eq(key))).thenReturn(expected);
 		
-		Optional<Model> actualOp = eut.getMagicByKey(key);
-		
-		Model actual = actualOp.orElseGet(() -> fail());
+		Model actual = eut.getMagicByKey(key);
 		
 		assertEquals(expected, actual);
 	}
 	
 	private Model createModel(List<MagicStuff> someMagicStuff) {
-		
-		Optional<Model> defaultModel = RDFUtils.prepareDefaultModel();
 
-		defaultModel.ifPresent(model -> someMagicStuff.forEach(magic -> {
+		Model model = RDFUtils.prepareDefaultModel();
 
-            Resource magicResource = model.createResource(Magic.uri + magic.id());
-            
-            magicResource.addProperty(RDF.type, Magic.Magic);
-            magicResource.addProperty(Magic.magicId, magic.id());
-            magicResource.addProperty(Magic.magicDescription, magic.magicString());
+		someMagicStuff.forEach(magic -> {
 
-            magicResource.addProperty(DCTerms.title, Magic.Magic.getLocalName() + " " + magic.id());
-            magicResource.addProperty(RDFS.label, Magic.Magic.getLocalName() + " " + magic.magicString());
-            magicResource.addProperty(Magic.magicType, magic.type());
-        }));
-		
-		return defaultModel.orElse(null);
+			Resource magicResource = model.createResource(Magic.uri + magic.id());
+
+			magicResource.addProperty(RDF.type, Magic.Magic);
+			magicResource.addProperty(Magic.magicId, magic.id());
+			magicResource.addProperty(Magic.magicDescription, magic.magicString());
+
+			magicResource.addProperty(DCTerms.title, Magic.Magic.getLocalName() + " " + magic.id());
+			magicResource.addProperty(RDFS.label, Magic.Magic.getLocalName() + " " + magic.magicString());
+			magicResource.addProperty(Magic.magicType, magic.type());
+		});
+
+		return model;
 	}
 	
 	// TODO: move to util package and RDFUtils

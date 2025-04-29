@@ -25,8 +25,6 @@
  */
 package se.autocorrect.springexample.services;
 
-import java.util.Optional;
-
 import org.apache.jena.rdf.model.Model;
 
 /**
@@ -49,5 +47,5 @@ public interface MagicRDFService {
 	 * @param key the key 
 	 * @return an {@code Optional} holding the RDF {@code MagicStuff} if present, an {@code Optional#empty()} otherwise
      */
-    Optional<Model> getMagicByKey(String key);
+    Model getMagicByKey(String key);
 }

@@ -41,7 +41,8 @@ public class Magic {
 	/**
      * The proposed name space of the vocabulary as a string.
      */
-    public static final String uri = "http://rdf.autocorrect.se/magic#";
+    //public static final String uri = "http://rdf.autocorrect.se/magic#";
+	public static final String uri = "http://localhost:8888/magic%23";
 
 	/**
      * The proposed prefix to use.

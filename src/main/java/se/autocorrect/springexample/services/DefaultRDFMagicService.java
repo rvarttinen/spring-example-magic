@@ -26,10 +26,8 @@
 package se.autocorrect.springexample.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
@@ -59,9 +57,9 @@ class DefaultRDFMagicService implements MagicRDFService {
 
         List<ExternalMagic> allMagic = boredToMagicServiceFacade.listAllMagicInTripleStore();
 
-        final Optional<Model> defaultModel = RDFUtils.prepareDefaultModel();
+        final Model model = RDFUtils.prepareDefaultModel();
 
-        defaultModel.ifPresent(model -> allMagic.forEach(externalMagic -> {
+       allMagic.forEach(externalMagic -> {
 
             Resource magicResource = model.createResource(Magic.uri + externalMagic.key());
             
@@ -72,13 +70,13 @@ class DefaultRDFMagicService implements MagicRDFService {
             magicResource.addProperty(DCTerms.title, Magic.Magic.getLocalName() + " " + externalMagic.key());
             magicResource.addProperty(RDFS.label, Magic.Magic.getLocalName() + " " + externalMagic.activity());
             magicResource.addProperty(Magic.magicType, externalMagic.type());
-        }));
+        });
 
-        return defaultModel.orElse(ModelFactory.createDefaultModel());
+        return model;
     }
 
     @Override
-    public Optional<Model> getMagicByKey(String key) {
+    public Model getMagicByKey(String key) {
     	
     	return boredToMagicServiceFacade.getExternalRDFMagicByKey(key); 
     }
