@@ -30,8 +30,7 @@ public class MagicRDFController {
 			@PathVariable("path") String path,
 			HttpServletRequest request) {
 
-		// TODO: the # needs to be encoded to %23 in order for Spring to accept is as part of the path and an regular HTML anchor ...
-		// TODO: parse path retrieve whatever is after any #
+		// TODO: the # needs to be encoded to %23 in order for Spring to accept is as part of the path and not as an regular HTML anchor ...
 		
 		responseEntity = ResponseEntity.notFound().build();
 		
