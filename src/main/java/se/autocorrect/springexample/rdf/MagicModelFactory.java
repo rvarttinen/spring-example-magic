@@ -24,21 +24,11 @@ class MagicModelFactory {
 
 	static Model createModelFromResouce(Resource resource) {
 		
-		Model model = null;
+		return switch (resource.getLocalName()) {
 		
-		switch (resource.getLocalName()) {
-		
-		case "Magic" :
-		case "magicId" :
-		case "magicDescription":
-		case "magicType":
-		case "originatingType":
-			model = createModelForResource(resource);
-		break;
-		default:
+		case "Magic", "magicId", "magicDescription", "magicType", "originatingType" -> createModelForResource(resource);
+		default -> null;
 		};
-		
-		return model; 
 	}
 
 	private static Model createModelForResource(Resource resource) {
