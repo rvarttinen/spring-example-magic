@@ -24,7 +24,8 @@
 
 @prefix xs: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix magic: <http://rdf.autocorrect.se/magic#> .
+#@prefix magic: <http://rdf.autocorrect.se/magic#> .
+@prefix magic: <http://localhost:8888/magic%23> .
 
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .

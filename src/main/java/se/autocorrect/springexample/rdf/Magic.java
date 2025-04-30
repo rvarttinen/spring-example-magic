@@ -25,7 +25,10 @@
  */
 package se.autocorrect.springexample.rdf;
 
+import java.util.Optional;
+
 import org.apache.jena.graph.Node;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -41,8 +44,10 @@ public class Magic {
 	/**
      * The proposed name space of the vocabulary as a string.
      */
-    //public static final String uri = "http://rdf.autocorrect.se/magic#";
 	public static final String uri = "http://localhost:8888/magic%23";
+
+	// TODO: above should be like this one!
+	static final String formalUri = "http://rdf.autocorrect.se/magic#";
 
 	/**
      * The proposed prefix to use.
@@ -76,6 +81,24 @@ public class Magic {
     public static final Property originatingType = Init.originatingType();
     
 
+	public static Optional<Resource> getResourceByName(String name) {
+
+		return switch (name) {
+		case "Magic" -> Optional.of(Magic);
+		case "magicId" -> Optional.of(magicId);
+		case "magicType" -> Optional.of(magicType);
+		case "magicDescription" -> Optional.of(magicDescription);
+		case "originatingType" -> Optional.of(originatingType);
+
+		default -> Optional.empty();
+		};
+	}
+	
+	public static Optional<Model> getModelByResource(Resource resource) {
+
+		return Optional.ofNullable(MagicModelFactory.createModelFromResouce(resource));
+	}
+    
     /**
      * Magic constants are used during Apache Jena initialization. If that initialization
      * is triggered by touching the {@code Magic} class, then the constants are null.
