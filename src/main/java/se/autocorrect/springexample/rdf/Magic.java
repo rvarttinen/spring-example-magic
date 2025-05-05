@@ -89,6 +89,7 @@ public class Magic {
 		case "magicType" -> Optional.of(magicType);
 		case "magicDescription" -> Optional.of(magicDescription);
 		case "originatingType" -> Optional.of(originatingType);
+		case null -> Optional.empty();
 
 		default -> Optional.empty();
 		};
