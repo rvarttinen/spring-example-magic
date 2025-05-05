@@ -1,25 +1,21 @@
 package se.autocorrect.springexample.infrastructure;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.jena.query.Query;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.junit.jupiter.api.Disabled;
+import org.apache.jena.vocabulary.RDF;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,8 +30,11 @@ import se.autocorrect.springexample.store.MagicResultProcessor;
 import se.autocorrect.springexample.store.TripleStore;
 import se.autocorrect.springexample.util.RDFUtils;
 
+
 @SpringBootTest(classes = {BoredToMagicServiceFacadeTest.Conf.class}, webEnvironment = NONE)
 class BoredToMagicServiceFacadeTest {
+	
+	// TODO: Have the RDF related test cases in a separate test class. 
 	
 	@Configuration
     @Import({BoredToMagicServciceFacade.class})
@@ -55,76 +54,90 @@ class BoredToMagicServiceFacadeTest {
 	@Qualifier("boredToMagicService")
 	BoredToMagicServciceFacade eut;
 
-//	@Test
-	void testGetExternalMagicByKey() {
+	@Test
+	void testGetExternalMagicByKeyFromExternalSource() {
+		
+		ExternalMagic expected = ExternalMagic.of("key", "activity", "type");
+		
+		when(bloomFilter.mightContain(eq("key"))).thenReturn(false);
+		when(bloomFilter.put(eq("key"))).thenReturn(true);
+		when(externalService.getExternalMagicByKey(eq("key"))).thenReturn(Optional.of(expected));
+		
+		ExternalMagic actual = eut.getExternalMagicByKey("key").orElseThrow();
+		
+		assertAll(
+				() -> assertEquals(expected, actual),
+				() -> verify(bloomFilter).mightContain(eq("key")),
+				() -> verify(bloomFilter).put(eq("key")),
+				() -> verify(externalService).getExternalMagicByKey(eq("key"))
+				);
+	}
+	
+	@Test
+	void testGetExternalMagicByKeyFromInternalSourceNotExist() {
+		
+		ExternalMagic expected = ExternalMagic.of("key", "activity", "type");
+		
+		when(bloomFilter.mightContain(eq("key"))).thenReturn(true);
+		when(bloomFilter.put(eq("key"))).thenReturn(true);
+		when(externalService.getExternalMagicByKey(eq("key"))).thenReturn(Optional.of(expected));
+		
+		when(tripleStore.select(any(Query.class), any(MagicResultProcessor.class))).thenReturn(Optional.empty());
+		
+		ExternalMagic actual = eut.getExternalMagicByKey("key").orElseThrow();
+		
+		assertAll(
+				() -> assertEquals(expected, actual),
+				() -> verify(bloomFilter).mightContain(eq("key")),
+				() -> verify(bloomFilter).put(eq("key")),
+				() -> verify(externalService).getExternalMagicByKey(eq("key")),
+				() -> verify(tripleStore).select(any(Query.class), any(MagicResultProcessor.class))
+				);
+	}
+	
+	@Test
+	void testGetExternalMagicByKeyFromInternalSourceExist() {
+		
+		ExternalMagic expected = ExternalMagic.of("key", "activity", "type");
+		
+		when(bloomFilter.mightContain(eq("key"))).thenReturn(true);
+		when(tripleStore.select(any(Query.class), any(MagicResultProcessor.class))).thenReturn(Optional.of(createModelFor(expected)));
+		
+		ExternalMagic actual = eut.getExternalMagicByKey("key").orElseThrow();
+		
+		assertAll(
+				() -> assertEquals(expected, actual),
+				() -> verify(bloomFilter).mightContain(eq("key")),
+				() -> verify(tripleStore).select(any(Query.class), any(MagicResultProcessor.class))
+				);
 	}
 
-//	@Test
-	void testGetExternalRDFMagicByKey() {
-	}
-
-	@Disabled("... until fixed.!..")
 	@Test
 	void testListAllMagicInTripleStore() {
 		
-		ExternalMagic expectedStuff = ExternalMagic.of("key", "activity", "type");
+		// TODO: Is this the way to test this "untestable" code: 
+		// https://stackoverflow.com/questions/44144205/with-mockito-how-do-i-verify-my-lambda-expression-was-called
 		
-		List<ExternalMagic> expected = Collections.singletonList(expectedStuff);
-		
-		final Model model = RDFUtils.prepareDefaultModel();
-		
-		// is this the way:
-		//https://stackoverflow.com/questions/44144205/with-mockito-how-do-i-verify-my-lambda-expression-was-called
-		
-		// Add some magic to default model
-			
-			/*
-			 * magic:3943506  rdf:type         magic:Magic;
-        magic:magicDescription  "Learn Express.js";
-        magic:magicId           "3943506";
-        magic:magicType         "internal";
-        magic:originatingType   "education" .
-			 */
-			Resource resource = model.createResource(Magic.uri + "key");
-			
-			resource.addProperty(Magic.magicId, ResourceFactory.createStringLiteral("key"));
-			resource.addProperty(Magic.magicType, ResourceFactory.createStringLiteral("type"));
-			resource.addProperty(Magic.magicDescription, ResourceFactory.createStringLiteral("activity"));
-		
-		ResultSet rsMock = mock(ResultSet.class);
-		
-		when(tripleStore.select(any(Query.class), any(MagicResultProcessor.class))).thenReturn(Optional.of(model));
-		
-		ArgumentCaptor<MagicResultProcessor> processorCaptor = ArgumentCaptor.forClass(MagicResultProcessor.class);
+		when(tripleStore.select(any(Query.class), any(MagicResultProcessor.class))).thenReturn(Optional.empty());
 		
 		List<ExternalMagic> actual = eut.listAllMagicInTripleStore();
-
-		verify(tripleStore).select(any(Query.class), processorCaptor.capture());
 		
-		MagicResultProcessor value = processorCaptor.getValue();
-		
-		value.processResultSt(rsMock);
-		
-		assertEquals(expected, actual);
-		
-		// TODO: Add verify to correspond the when 
+		verify(tripleStore).select(any(), any(MagicResultProcessor.class));
 	}
 	
-	private MagicResultProcessor magicResultProcessorHandlerSpy(MagicResultProcessor processor) {
-
-		// Create a spy of the MagicResultProcessor functional interface itself.
-		MagicResultProcessor spy = Mockito.spy(MagicResultProcessor.class);
+	private Model createModelFor(ExternalMagic magic) {
 		
-//		Mockito.doAnswer(it -> {
-//
-//			ResultSet resultSet = (ResultSet) it.getArguments()[1];
-//
-//			processor.processResultSt(resultSet);
-//
-//			return null;
-//
-//		}).when(spy).processResultSt(Mockito.any(ResultSet.class));
+		Model model = RDFUtils.prepareDefaultModel();
+		
+		Resource r = model.createResource(Magic.uri + magic.key());
+		r.addProperty(RDF.type, Magic.Magic);
 
-		return spy;
+		r.addProperty(Magic.magicId, magic.key());
+
+		r.addProperty(Magic.magicType, magic.type());
+
+		r.addProperty(Magic.magicDescription, magic.activity());
+		
+		return model;
 	}
 }
