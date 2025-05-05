@@ -27,7 +27,7 @@ class MagicModelFactory {
 		return switch (resource.getLocalName()) {
 		
 		case "Magic", "magicId", "magicDescription", "magicType", "originatingType" -> createModelForResource(resource);
-		default -> null;
+		case null, default -> null;
 		};
 	}
 

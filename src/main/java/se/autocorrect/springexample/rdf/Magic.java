@@ -84,14 +84,14 @@ public class Magic {
 	public static Optional<Resource> getResourceByName(String name) {
 
 		return switch (name) {
+
 		case "Magic" -> Optional.of(Magic);
 		case "magicId" -> Optional.of(magicId);
 		case "magicType" -> Optional.of(magicType);
 		case "magicDescription" -> Optional.of(magicDescription);
 		case "originatingType" -> Optional.of(originatingType);
-		case null -> Optional.empty();
 
-		default -> Optional.empty();
+		case null, default -> Optional.empty();
 		};
 	}
 	
