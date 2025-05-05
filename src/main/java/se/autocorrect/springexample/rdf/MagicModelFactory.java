@@ -18,7 +18,7 @@ class MagicModelFactory {
 
 	static {
 
-		InputStream resourceAsStream = RDFUtils.class.getResourceAsStream("/magic.ttl");
+		InputStream resourceAsStream = MagicModelFactory.class.getResourceAsStream("/magic.ttl");
 		magicVocabulary.read(resourceAsStream, Magic.getURI(), Lang.TURTLE.getName());
 	}
 
