@@ -18,6 +18,10 @@ import se.autocorrect.springexample.rdf.LDMediaTypes;
 import se.autocorrect.springexample.rdf.Magic;
 import se.autocorrect.springexample.util.HeaderContentTypeUtil;
 
+/**
+ * A specialized controller for serving the {@code Magic}-vocabulary resource
+ * and properties as RDF resources.
+ */
 @RestController
 @RequestMapping("/**")
 public class MagicRDFController {

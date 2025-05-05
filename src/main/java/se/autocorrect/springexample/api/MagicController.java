@@ -46,6 +46,10 @@ import se.autocorrect.springexample.services.MagicRDFService;
 import se.autocorrect.springexample.services.MagicService;
 import se.autocorrect.springexample.util.HeaderContentTypeUtil;
 
+/**
+ * The "main" Magic-controller serving magic data both in regular formats and
+ * RDF depending on the "Accept" header provided.
+ */
 @RestController
 @RequestMapping("/v1")
 public class MagicController {
