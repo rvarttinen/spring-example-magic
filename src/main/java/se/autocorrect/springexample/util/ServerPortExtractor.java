@@ -14,14 +14,14 @@ public class ServerPortExtractor {
 
     private int port;
 
-    public int getport() {
+    public int getPort() {
         return port;
     }
 
     /**
-     * Await the web server to start spo we can get the current port used, whether fixed by setting or random.
+     * Await the web server to start so we can get the current port used, whether fixed by setting or random.
      *
-     * @param event
+     * @param event the web server init event
      */
     @EventListener
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
