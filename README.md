@@ -90,7 +90,7 @@ Please keep in mind that the GraphQL capabilities was recently added and is a wo
 ### SPARQL endpoint
 By activating the SPARQL capability the locally stored RDF data can bea extracted and manipulated using a SPRQL endpoint. This capability comes "out-of-box" by employing Apache Fuseki.
 The `application.properties` file holds a setting, `rdf.fuseki.enabled`, controlling this feature. By default it is set to `false`. 
-By setting it to `true` and restarting the service the Fuseki provided endpoint will be available on port 3001. You can use Postman (post the request with the SPARQL-query) or any SPARQl-editor of your choice. 
+By setting it to `true` and restarting the service the Fuseki provided endpoint will be available on port 3001. You can use Postman (post the request with the SPARQL-query) or any SPARQL-editor of your choice. 
 
 ### Logging to the console
 There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for the log level `INFO`. Using an aspect for logging is maybe not that obvious, it can be sometimes hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements and keep it somewhat clean, and this is a kind of demo anyway. The project is not that large ... yet. 
@@ -240,11 +240,9 @@ Handling connection for 8080
 
 
 # Further improvements ... 
-This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
+This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 24). 
 
 Items on the current TODO-list: 
-- expose the Magic vocabulary so it can be referenced instead of as now, a temporary solution, appear in populated default models with the entire vocabulary present
-- in order to makes things more interesting a GraphQL interface is in the process of being added. 
 - create a mechanism for populating the triple store with a specified number of random entries
 - introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
 - add a client/UI for exploring data visually; currently a React based front-end is being worked on. It is harbored in a [repository of its own.](https://github.com/rvarttinen/react-example-magic) 
@@ -255,11 +253,10 @@ Items on the current TODO-list:
 - see if we can make use of some interesting new features in Java: 
     - switch with pattern matching (to a large extent already done) 
     - primitive types in patterns (instanceof and switch, on its way ...)
-    - use a SequencedCollection where applicable 
+    - maybe use a SequencedCollection where applicable 
     - ... more ...
-- expose a SPARQL-endpoint (if the triple store is executed in a separate service, it probably already has this or add an Apache Fuseki service pod if using TDB)
-- combine data from other sources? 
+- combine data from more sources? "Convert" Chuck Norris jokes to magic as well? 
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not really required to be that performant in any way)
 - collect utilities common to other projects into their own repository (expose a util-library for reuse and avoid code duplication over several repos)
-- String templates was introduced as a preview in 21, but as of 23 the feature seems to have been axed due to alleged design flaws. So, we will unfortunately not se any of those as we are on 23, for now ... 
+- String templates was introduced as a preview in 21, but as of 23 the feature seems to have been axed due to alleged design flaws. So, we will unfortunately not se any of those for now ... 
 
