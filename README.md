@@ -87,6 +87,11 @@ q{
 
 Please keep in mind that the GraphQL capabilities was recently added and is a work in progress (as the entire app for that matter), as more, and more complex, things will come soon. 
 
+### SPARQL endpoint
+By activating the SPARQL capability the locally stored RDF data can bea extracted and manipulate using a SPRQL endpoint. Tj´his capability comes "out-of-box" by employing Apache Fuseki.
+The `application.properties` file holds a setting `rdf.fuseki.enabled`, controlling this feature. By default it is set to `false`. 
+By setting it to `true` and restarting the service the Fuseki provided endpoint will be available on port 3001. You can use Postman (post the request with the SPARQL-query) or any SPARQl-editor of your choice. 
+
 ### Logging to the console
 There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for the log level `INFO`. Using an aspect for logging is maybe not that obvious, it can be sometimes hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements and keep it somewhat clean, and this is a kind of demo anyway. The project is not that large ... yet. 
 
