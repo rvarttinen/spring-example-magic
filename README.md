@@ -89,7 +89,7 @@ Please keep in mind that the GraphQL capabilities was recently added and is a wo
 
 ### SPARQL endpoint
 By activating the SPARQL capability the locally stored RDF data can bea extracted and manipulated using a SPRQL endpoint. This capability comes "out-of-box" by employing Apache Fuseki.
-The `application.properties` file holds a setting `rdf.fuseki.enabled`, controlling this feature. By default it is set to `false`. 
+The `application.properties` file holds a setting, `rdf.fuseki.enabled`, controlling this feature. By default it is set to `false`. 
 By setting it to `true` and restarting the service the Fuseki provided endpoint will be available on port 3001. You can use Postman (post the request with the SPARQL-query) or any SPARQl-editor of your choice. 
 
 ### Logging to the console
