@@ -25,13 +25,13 @@
  */
 package se.autocorrect.springexample.rdf;
 
-import java.util.Optional;
-
 import org.apache.jena.graph.Node;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+
+import java.util.Optional;
 
 /**
  * The Magic vocabulary. It reflects the contents of the vocabulary as defined
