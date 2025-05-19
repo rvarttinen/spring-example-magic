@@ -1,4 +1,4 @@
-FROM openjdk:23-jdk
+FROM openjdk:24-jdk
 LABEL org.opencontainers.image.authors="rvarttinen@autocorrect.se"
 COPY build/libs/spring-example-magic-all-0.0.1-SNAPSHOT.jar spring-example-magic-all-0.0.1-SNAPSHOT.jar
 
