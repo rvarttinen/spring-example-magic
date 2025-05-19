@@ -97,7 +97,7 @@ public class Magic {
 	
 	public static Optional<Model> getModelByResource(Resource resource) {
 
-		return Optional.ofNullable(MagicModelFactory.createModelFromResouce(resource));
+		return Optional.ofNullable(MagicModelFactory.createModelFromResource(resource));
 	}
     
     /**
