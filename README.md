@@ -133,7 +133,7 @@ gradlew bootRun
 ./gradle bootRun
 ```
 
-It is also possible to load and execute this code in your IDE of choice. It has been tested on Eclipse SDK (2025-03 4.35.0). 
+It is also possible to load and execute this code in your IDE of choice. It has been tested on IntelliJ IDEA 2025.1.1.1 (Ultimate Edition) and Eclipse SDK (2025-03 4.35.0). 
 
 # Docker 
 Containerizing the application is done using the following steps. Once a Docker image is available it can be deployed as single service in e.g Docker Desktop, or in a Kubernetes cluster. 
