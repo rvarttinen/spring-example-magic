@@ -45,7 +45,7 @@ class RDFUtilsTest {
     @FieldSource("ldMediaTypes")
     void testGetCorrespondingRDFLang(LDMediaType mediaType, Lang expectedLang){
 
-        Optional<Lang> expected = Optional.of(expectedLang);
+        Optional<Lang> expected = Optional.ofNullable(expectedLang);
 
         Optional<Lang> actual = RDFUtils.getCorrespondingRDFLang(mediaType);
 
@@ -59,10 +59,11 @@ class RDFUtilsTest {
 
     static final Supplier<Stream<Arguments>> ldMediaTypes = () ->
 
-         Stream.of(
-                arguments(LDMediaType.RDF_XML, Lang.RDFXML),
-                arguments(LDMediaType.JSON_LD, Lang.JSONLD),
-                arguments(LDMediaType.TEXT_TURTLE, Lang.TURTLE),
-                arguments(LDMediaType.TRIG, Lang.TRIG)
-        );
+            Stream.of(
+                    arguments(LDMediaType.RDF_XML, Lang.RDFXML),
+                    arguments(LDMediaType.JSON_LD, Lang.JSONLD),
+                    arguments(LDMediaType.TEXT_TURTLE, Lang.TURTLE),
+                    arguments(LDMediaType.TRIG, Lang.TRIG),
+                    arguments(LDMediaType.TEXT_NQUADS, null) // Not yet supported
+            );
 }
