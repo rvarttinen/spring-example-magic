@@ -19,7 +19,7 @@ public class ServerPortExtractor {
     }
 
     /**
-     * Await the web server to start so we can get the current port used, whether fixed by setting or random.
+     * Await the web server to start so we can get the current port used, whether fixed by a setting or random.
      *
      * @param event the web server init event
      */

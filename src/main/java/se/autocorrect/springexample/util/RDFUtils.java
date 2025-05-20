@@ -49,22 +49,14 @@ public final class RDFUtils {
 
         Objects.requireNonNull(mediaType);
 
-        Optional<Lang> retVal = Optional.empty();
         String mediaTypeString = mediaType.getType() + "/" + mediaType.getSubtype();
 
-        switch (mediaTypeString){
-
-            case LDMediaTypes.TEXT_TURTLE:
-                retVal = Optional.of(Lang.TURTLE);
-                break;
-            case LDMediaTypes.JSON_LD:
-                retVal = Optional.of(Lang.JSONLD);
-                break;
-            case LDMediaTypes.RDF_XML:
-                retVal = Optional.of(Lang.RDFXML);
-        }
-
-        return retVal;
+       return switch (mediaTypeString) {
+            case LDMediaTypes.TEXT_TURTLE -> Optional.of(Lang.TURTLE);
+            case LDMediaTypes.JSON_LD -> Optional.of(Lang.JSONLD);
+            case LDMediaTypes.RDF_XML -> Optional.of(Lang.RDFXML);
+            default -> Optional.empty();
+        };
     }
     
     public static Model prepareDefaultModel() {

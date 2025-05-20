@@ -34,7 +34,7 @@ import org.springframework.http.MediaType;
  * Represents the media types available for semantic web/linked data.
  * <p>Formats for human consumption; e.g. Turtle, are far more readable than
  * e.g N-triples or N-quads as the latter are optimized for serialization.
- * They are not human readable, even at moderate scale.</p>
+ * They are not human-readable, even at moderate scale.</p>
  * <p>JSON-LD is popular, but a bit cumbersome and not that space efficient as e.g.
  * Turtle. Although readable by humans, it is primarily used for Front End clients
  * or the like requiring data transported as JSON.</p>
@@ -110,7 +110,7 @@ public enum LDMediaType {
     }
 
     /**
-     * Match a received string to a LD Media Type. If there is no
+     * Match a received string to an LD Media Type. If there is no
      * match an {@code IllegalArgumentException} will be thrown.
      *
      * @param mediaType the media type
@@ -121,9 +121,7 @@ public enum LDMediaType {
         return Arrays.stream(values())
                 .filter(mt -> mt.getMediaTypeString().equals(mediaType))
                 .findFirst()
-                .orElseThrow(() -> {
-                    throw new IllegalArgumentException("Not supported media type: " + mediaType);
-                });
+                .orElseThrow(() -> new IllegalArgumentException("Not supported media type: " + mediaType));
     }
 
     /**
