@@ -55,6 +55,7 @@ public final class RDFUtils {
             case LDMediaTypes.TEXT_TURTLE -> Optional.of(Lang.TURTLE);
             case LDMediaTypes.JSON_LD -> Optional.of(Lang.JSONLD);
             case LDMediaTypes.RDF_XML -> Optional.of(Lang.RDFXML);
+            case LDMediaTypes.APPLICATION_TRIG -> Optional.of(Lang.TRIG);
             default -> Optional.empty();
         };
     }

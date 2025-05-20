@@ -62,6 +62,7 @@ class RDFUtilsTest {
          Stream.of(
                 arguments(LDMediaType.RDF_XML, Lang.RDFXML),
                 arguments(LDMediaType.JSON_LD, Lang.JSONLD),
-                arguments(LDMediaType.TEXT_TURTLE, Lang.TURTLE)
+                arguments(LDMediaType.TEXT_TURTLE, Lang.TURTLE),
+                arguments(LDMediaType.TRIG, Lang.TRIG)
         );
 }
