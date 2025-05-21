@@ -22,7 +22,7 @@ This project has several purposes:
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
 * base for experimentation using the latest and greatest of Java (currently 24) and other libraries used in this project
 * act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
-* additional experimentation could also include performing inference using RDF an dnot AI (!), probably more intersiting one we fetch data from more than one disparate source. 
+* additional experimentation could also include performing inference using RDF and not AI (!), probably more interesting once we fetch data from more than one disparate source. 
 
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
