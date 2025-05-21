@@ -22,6 +22,7 @@ This project has several purposes:
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
 * base for experimentation using the latest and greatest of Java (currently 24) and other libraries used in this project
 * act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
+* additional experimentation could also include performing inference using RDF an dnot AI (!), probably more intersiting one we fetch data from more than one disparate source. 
 
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
@@ -244,7 +245,8 @@ This is an experimental project, however, improvements will be made, including u
 
 Items on the current TODO-list: 
 - create a mechanism for populating the triple store with a specified number of random entries
-- introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
+- introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior
+- apply query time inferencing (RDF, not using AI as that is a separate repo) once we have sufficient amounts of inersting data, preferrably from disparate sources 
 - add a client/UI for exploring data visually; currently a React based front-end is being worked on. It is harbored in a [repository of its own.](https://github.com/rvarttinen/react-example-magic) 
 - separate out the triple store to a separate service
 - maybe add OAuth2 authentication to make the whole thing more production like? One could, e.g., login using one's account on GitHub. 
