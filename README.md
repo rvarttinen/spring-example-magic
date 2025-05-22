@@ -24,12 +24,12 @@ This project has several purposes:
 * act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
 * additional experimentation could also include performing inference using RDF and not AI (!), probably more interesting once we fetch data from more than one disparate source. 
 
-# What is does
-The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
-
 # History
 Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
 However, in doing so it started slowly move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
+
+# What is does
+The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
 
 ### Regular REST, with and without RDF 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
