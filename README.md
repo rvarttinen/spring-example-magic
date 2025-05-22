@@ -22,7 +22,7 @@ This project has several purposes:
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
 * base for experimentation using the latest and greatest of Java (currently 24) and other libraries used in this project
 * act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
-* additional experimentation could also include performing inference using RDF an dnot AI (!), probably more intersiting one we fetch data from more than one disparate source. 
+* additional experimentation could also include performing inference using RDF and not AI (!), probably more interesting once we fetch data from more than one disparate source. 
 
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
@@ -89,7 +89,7 @@ q{
 Please keep in mind that the GraphQL capabilities was recently added and is a work in progress (as the entire app for that matter), as more, and more complex, things will come soon. 
 
 ### SPARQL endpoint
-By activating the SPARQL capability the locally stored RDF data can bea extracted and manipulated using a SPRQL endpoint. This capability comes "out-of-box" by employing Apache Fuseki.
+By activating the SPARQL capability the locally stored RDF data can be extracted and manipulated using a SPARQL endpoint. This capability comes "out-of-box" by employing Apache Fuseki.
 The `application.properties` file holds a setting, `rdf.fuseki.enabled`, controlling this feature. By default it is set to `false`. 
 By setting it to `true` and restarting the service the Fuseki provided endpoint will be available on port 3001. You can use Postman (post the request with the SPARQL-query) or any SPARQL-editor of your choice. 
 
