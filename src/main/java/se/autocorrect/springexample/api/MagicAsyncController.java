@@ -25,6 +25,7 @@
  */
 package se.autocorrect.springexample.api;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -35,13 +36,16 @@ import org.mapstruct.util.Experimental;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import se.autocorrect.springexample.model.MagicStuff;
 import se.autocorrect.springexample.rdf.LDMediaTypes;
 import se.autocorrect.springexample.services.AsyncService;
 import se.autocorrect.springexample.util.HeaderContentTypeUtil;
@@ -51,6 +55,8 @@ import se.autocorrect.springexample.util.HeaderContentTypeUtil;
 @RequestMapping("/v2")
 public class MagicAsyncController {
 
+	// TODO: https://stackoverflow.com/questions/65120202/is-using-async-and-completablefuture-in-controller-can-increase-performance-of
+
 	public static final String NO_KEY = null;
 	
 	private final AsyncService asyncService;
@@ -59,21 +65,46 @@ public class MagicAsyncController {
 		this.asyncService = asyncService;
     }
 
+	@Async
 	@GetMapping(value = "/magic", produces = { LDMediaTypes.TEXT_TURTLE, LDMediaTypes.RDF_XML, LDMediaTypes.JSON_LD })
-	public ResponseEntity<Model> getMagicAsync(
+	public CompletableFuture<ResponseEntity<Model>> getRDFMagicAsync(
 			@RequestParam("key") Optional<String> key, 
 			@RequestHeader("Accept") String accept) throws InterruptedException, ExecutionException {
 
-		CompletableFuture<Model> listFuture = key.isPresent() ? CompletableFuture.completedFuture(ModelFactory.createDefaultModel())  : asyncService.listMagic();
+		// TODO: fix this one into something better ...
+		CompletableFuture<Model> listFuture = key.isPresent() ? CompletableFuture.completedFuture(ModelFactory.createDefaultModel())  : asyncService.listRDFMagic();
 		CompletableFuture<Model> wikiDataFuture = asyncService.listWikiDataMagic(key.orElse(NO_KEY));
 
 		CompletableFuture.allOf(listFuture, wikiDataFuture).join();
-		
+
 		Model union = combineResults(listFuture.get(), wikiDataFuture.get());
-		
+
 		HttpHeaders headers = calculateLDContentTypeHeader(accept);
 
-		return headers.isEmpty() ? new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE) : createOkResponse(union, headers);
+		return CompletableFuture.completedFuture(headers.isEmpty() ? new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE) : createOkResponse(union, headers));
+	}
+
+	@Async
+	@GetMapping(value = "/magic", produces = {  MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE  })
+	public CompletableFuture<?> getMagicAsync(
+			@RequestParam("key") Optional<String> key,
+			@RequestHeader("Accept") String accept) throws InterruptedException, ExecutionException {
+
+		if (key.isPresent()) {
+			return getMagicByKey(accept, key.get());
+		}
+
+		return listAllMagic(accept);
+	}
+
+	private CompletableFuture<List<MagicStuff>> listAllMagic(String accept) {
+
+		return asyncService.listMagic();
+	}
+
+	private CompletableFuture<MagicStuff> getMagicByKey(String accept, String key) {
+
+		return asyncService.getMagicStuffByKey(key);
 	}
 
 	private ResponseEntity<Model> createOkResponse(Model union, HttpHeaders headers) {

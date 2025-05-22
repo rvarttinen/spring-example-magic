@@ -1,6 +1,7 @@
 package se.autocorrect.springexample.services;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -15,10 +16,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import se.autocorrect.springexample.api.MagicAsynchController;
+import se.autocorrect.springexample.api.MagicAsyncController;
 import se.autocorrect.springexample.infrastructure.BoredToMagicServciceFacade;
 import se.autocorrect.springexample.infrastructure.ExternalMagic;
 import se.autocorrect.springexample.infrastructure.WikiDataToMagicFacade;
+import se.autocorrect.springexample.model.MagicStuff;
 import se.autocorrect.springexample.rdf.Magic;
 import se.autocorrect.springexample.util.RDFUtils;
 
@@ -41,7 +43,7 @@ class DefaultAsyncService implements AsyncService {
 	}
 
 	@Override
-	public CompletableFuture<Model> listMagic() throws InterruptedException {
+	public CompletableFuture<Model> listRDFMagic() throws InterruptedException {
 
 		return CompletableFuture.completedFuture(listAllKnownMagic());
 	}
@@ -51,7 +53,7 @@ class DefaultAsyncService implements AsyncService {
 
 		CompletableFuture<Model> result;
 
-		if (key != MagicAsynchController.NO_KEY) {
+		if (!Objects.equals(key, MagicAsyncController.NO_KEY)) {
 
 			result = CompletableFuture.completedFuture(getSomeDataFromWikiData(key));
 
@@ -61,6 +63,16 @@ class DefaultAsyncService implements AsyncService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public CompletableFuture<List<MagicStuff>> listMagic() {
+		return null;
+	}
+
+	@Override
+	public CompletableFuture<MagicStuff> getMagicStuffByKey(String key) {
+		return null;
 	}
 
 	private Model listAllKnownMagic() {
