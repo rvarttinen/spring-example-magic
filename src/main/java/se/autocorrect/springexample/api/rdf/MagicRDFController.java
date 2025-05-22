@@ -1,4 +1,4 @@
-package se.autocorrect.springexample.api;
+package se.autocorrect.springexample.api.rdf;
 
 import java.util.Optional;
 
