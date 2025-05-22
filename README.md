@@ -27,6 +27,10 @@ This project has several purposes:
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
 
+# History
+Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
+However, in doing so it started slowly move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
+
 ### Regular REST, with and without RDF 
 If no key is provided the service will list all locally stored entries. It will not make any attempt to retrieve any external data - for now. 
 
@@ -99,10 +103,6 @@ There is a logging aspect taking care of logging in the `services` and `infrastr
 Also, when it comes to logging: all incoming request are furnished with Mapped Diagnostic Context (MDC) so the call chain of method invocations through the application can easily be followed if there are multiple simultaneous incoming requests. Check the `logback-spring.xml` file, the value appears as `traceId`. The class `RequestLoggingFilter` is invoked for each incoming request and produces a trace id for this purpose. 
 
 The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. If you want to try logging on other levels, like `INFO`; you could alter the `RequestLoggingFilter` class; add whatever logging statments necessary. 
-
-# History
-Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
-However, in doing so it started slowly move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
 
 # Building and Running the service
 After checking out the code from this repository, building it should be straightforward. 
