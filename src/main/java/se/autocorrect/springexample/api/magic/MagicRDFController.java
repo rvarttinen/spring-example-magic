@@ -1,6 +1,5 @@
 package se.autocorrect.springexample.api.magic;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,8 +25,7 @@ public class MagicRDFController {
 	@GetMapping(value = "{path}", produces = {LDMediaTypes.TEXT_TURTLE, LDMediaTypes.RDF_XML, LDMediaTypes.JSON_LD} )
 	public ResponseEntity<Model> getMagicRef(
 			@RequestHeader("Accept") String accept,
-			@PathVariable("path") String path,
-			HttpServletRequest request) {
+			@PathVariable("path") String path) {
 
 		// TODO: the # needs to be encoded to %23 in order for Spring to accept is as part of the path and not as an regular HTML anchor ...
 		
@@ -47,14 +45,12 @@ public class MagicRDFController {
 					Optional<Model> modelOp = Magic.getModelByResource(resource);
 					
 					HttpHeaders headers = HeaderContentTypeUtil.calculateLDContentTypeHeader(accept);
-					
-					modelOp.ifPresent(model -> {
-						
-						responseEntity = ResponseEntity
-								.status(HttpStatus.OK)
-								.headers(headers)
-								.body(model);
-					});
+
+					modelOp.ifPresent(model ->
+							responseEntity = ResponseEntity
+									.status(HttpStatus.OK)
+									.headers(headers)
+									.body(model));
 				});
 			}
 		}
