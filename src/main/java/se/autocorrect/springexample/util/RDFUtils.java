@@ -31,6 +31,10 @@ import java.util.Optional;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
+import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import org.springframework.http.MediaType;
 
 import se.autocorrect.springexample.rdf.LDMediaType;
@@ -72,10 +76,10 @@ public final class RDFUtils {
         Model defaultModel = ModelFactory.createDefaultModel();
         
         defaultModel.setNsPrefix("xs", "http://www.w3.org/2001/XMLSchema#");
-        defaultModel.setNsPrefix("owl", "http://www.w3.org/2002/07/owl#");
-        defaultModel.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        defaultModel.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-        defaultModel.setNsPrefix("dc", "http://purl.org/dc/terms/");
+        defaultModel.setNsPrefix("owl", OWL.getURI());
+        defaultModel.setNsPrefix("rdf", RDF.getURI());
+        defaultModel.setNsPrefix("rdfs", RDFS.getURI());
+        defaultModel.setNsPrefix("dc", DCTerms.getURI());
         
         defaultModel.setNsPrefix("magic", Magic.getURI());
 
