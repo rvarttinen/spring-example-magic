@@ -1,20 +1,14 @@
 package se.autocorrect.springexample.rdf;
 
-import java.io.InputStream;
-
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
-
 import se.autocorrect.springexample.util.RDFUtils;
+
+import java.io.InputStream;
 
 class MagicModelFactory {
 	
-	private static Model magicVocabulary = ModelFactory.createDefaultModel();
+	private static final Model magicVocabulary = ModelFactory.createDefaultModel();
 
 	static {
 
@@ -22,7 +16,7 @@ class MagicModelFactory {
 		magicVocabulary.read(resourceAsStream, Magic.getURI(), Lang.TURTLE.getName());
 	}
 
-	static Model createModelFromResouce(Resource resource) {
+	static Model createModelFromResource(Resource resource) {
 		
 		return switch (resource.getLocalName()) {
 		
@@ -35,7 +29,7 @@ class MagicModelFactory {
 		
 		Model model = RDFUtils.prepareDefaultModel();
 		
-		StmtIterator statements = magicVocabulary.listStatements(resource, (Property)null, (RDFNode)null);
+		StmtIterator statements = magicVocabulary.listStatements(resource, null, (RDFNode)null);
 		model.add(statements);
 		
 		return model;

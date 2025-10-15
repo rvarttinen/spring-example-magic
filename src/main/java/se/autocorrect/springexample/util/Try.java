@@ -205,7 +205,7 @@ public abstract class Try<T> implements Monad<T> {
 		if (isSuccess()) {
 			try {
 				return function.apply(get());
-			} catch (Throwable t) {
+			} catch (Throwable _) {
 			}
 		}
 

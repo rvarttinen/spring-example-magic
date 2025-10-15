@@ -95,7 +95,7 @@ public class MagicController {
 
 		HttpHeaders headers = HeaderContentTypeUtil.calculateLDContentTypeHeader(accept);
 
-		return headers.isEmpty() ? new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE) : createOkReponse(magicStuff, headers);
+		return headers.isEmpty() ? new ResponseEntity<>(HttpStatus.UNSUPPORTED_MEDIA_TYPE) : createOkResponse(magicStuff, headers);
 	}
 
 	private ResponseEntity<MagicStuff> getMagicByKey(String accept, String key) {
@@ -120,8 +120,8 @@ public class MagicController {
 				new ResponseEntity<>(magicStuffList, headers, HttpStatus.OK);
 	}
 	
-	private ResponseEntity<Model> createOkReponse(Model model, HttpHeaders headers) {
+	private ResponseEntity<Model> createOkResponse(Model model, HttpHeaders headers) {
 		
-		return model.isEmpty() ? new ResponseEntity<Model>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(model, headers, HttpStatus.OK);
+		return model.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(model, headers, HttpStatus.OK);
 	}
 }

@@ -22,6 +22,11 @@ This project has several purposes:
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
 * base for experimentation using the latest and greatest of Java (currently 24) and other libraries used in this project
 * act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
+* additional experimentation could also include performing inference using RDF and not AI (!), probably more interesting once we fetch data from more than one disparate source. 
+
+# History
+Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
+However, in doing so it started slowly move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
 
 # What is does
 The example/demo service is really simple; it will retrieve an entry from the [Bored API](https://apis.scrimba.com/bored/) and store it locally as RDF magic. I.e providing a key to an entry will fetch it from the external, Bored API, and apply semantics to  it and then store it in an in-memory triple store. Keys are in the range [1000000, 9999999]. If same entry is requested subsequently the locally stored entry will be used (a Bloom filter is queried first to see if there might be a local entry of it stored, otherwise an external fetch is performed). 
@@ -87,16 +92,17 @@ q{
 
 Please keep in mind that the GraphQL capabilities was recently added and is a work in progress (as the entire app for that matter), as more, and more complex, things will come soon. 
 
+### SPARQL endpoint
+By activating the SPARQL capability the locally stored RDF data can be extracted and manipulated using a SPARQL endpoint. This capability comes "out-of-box" by employing Apache Fuseki.
+The `application.properties` file holds a setting, `rdf.fuseki.enabled`, controlling this feature. By default it is set to `false`. 
+By setting it to `true` and restarting the service the Fuseki provided endpoint will be available on port 3001. You can use Postman (post the request with the SPARQL-query) or any SPARQL-editor of your choice. 
+
 ### Logging to the console
 There is a logging aspect taking care of logging in the `services` and `infrastructure` packages. These log statements are set to the be active for the log level `INFO`. Using an aspect for logging is maybe not that obvious, it can be sometimes hard to see what gets logged and when. The idea behind it, though, is that we do not want to litter the code with logging statements and keep it somewhat clean, and this is a kind of demo anyway. The project is not that large ... yet. 
 
 Also, when it comes to logging: all incoming request are furnished with Mapped Diagnostic Context (MDC) so the call chain of method invocations through the application can easily be followed if there are multiple simultaneous incoming requests. Check the `logback-spring.xml` file, the value appears as `traceId`. The class `RequestLoggingFilter` is invoked for each incoming request and produces a trace id for this purpose. 
 
 The controller already has logging by default in Spring Boot itself. However, in order to see it you need to set the log level to `DEBUG`. However, doing so will render quite a lot of printouts on the console. If you want to try logging on other levels, like `INFO`; you could alter the `RequestLoggingFilter` class; add whatever logging statments necessary. 
-
-# History
-Everything has a history, even this little project. It started out as a simple demo with a slightly silly and whimsical touch (to get people's attention?). It lay dormant for some years until quite recently when it is now housed in this repository. 
-However, in doing so it started slowly move away from some silliness and hopefully it will mature over time as it gets new features and the deployment model solidifies (Kubernetes). 
 
 # Building and Running the service
 After checking out the code from this repository, building it should be straightforward. 
@@ -128,7 +134,7 @@ gradlew bootRun
 ./gradle bootRun
 ```
 
-It is also possible to load and execute this code in your IDE of choice. It has been tested on Eclipse SDK (2025-03 4.35.0). 
+It is also possible to load and execute this code in your IDE of choice. It has been tested on IntelliJ IDEA 2025.1.1.1 (Ultimate Edition) and Eclipse SDK (2025-03 4.35.0). 
 
 # Docker 
 Containerizing the application is done using the following steps. Once a Docker image is available it can be deployed as single service in e.g Docker Desktop, or in a Kubernetes cluster. 
@@ -235,13 +241,12 @@ Handling connection for 8080
 
 
 # Further improvements ... 
-This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 23). 
+This is an experimental project, however, improvements will be made, including use of the latest features in the Java platform (currently Java 24). 
 
 Items on the current TODO-list: 
-- expose the Magic vocabulary so it can be referenced instead of as now, a temporary solution, appear in populated default models with the entire vocabulary present
-- in order to makes things more interesting a GraphQL interface is in the process of being added. 
 - create a mechanism for populating the triple store with a specified number of random entries
-- introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior 
+- introduce version 2 (v2) of the service with greater capabilities and asynchronous behavior
+- apply query time inferencing (RDF, not using AI as that is a separate repo) once we have sufficient amounts of inersting data, preferrably from disparate sources 
 - add a client/UI for exploring data visually; currently a React based front-end is being worked on. It is harbored in a [repository of its own.](https://github.com/rvarttinen/react-example-magic) 
 - separate out the triple store to a separate service
 - maybe add OAuth2 authentication to make the whole thing more production like? One could, e.g., login using one's account on GitHub. 
@@ -250,11 +255,10 @@ Items on the current TODO-list:
 - see if we can make use of some interesting new features in Java: 
     - switch with pattern matching (to a large extent already done) 
     - primitive types in patterns (instanceof and switch, on its way ...)
-    - use a SequencedCollection where applicable 
+    - maybe use a SequencedCollection where applicable 
     - ... more ...
-- expose a SPARQL-endpoint (if the triple store is executed in a separate service, it probably already has this or add an Apache Fuseki service pod if using TDB)
-- combine data from other sources? 
+- combine data from more sources? "Convert" Chuck Norris jokes to magic as well? 
 - introduce Futures for handling incoming requests (to experiment codewise, this service is not really required to be that performant in any way)
 - collect utilities common to other projects into their own repository (expose a util-library for reuse and avoid code duplication over several repos)
-- String templates was introduced as a preview in 21, but as of 23 the feature seems to have been axed due to alleged design flaws. So, we will unfortunately not se any of those as we are on 23, for now ... 
+- String templates was introduced as a preview in 21, but as of 23 the feature seems to have been axed due to alleged design flaws. So, we will unfortunately not se any of those for now ... 
 
