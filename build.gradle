@@ -6,22 +6,10 @@ plugins {
 }
 
 group = 'se.autocorrect'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
-	}
-}
+version = '0.1.0-SNAPSHOT'
 
 repositories {
 	mavenCentral()
-}
-
-dependencyManagement {
-    imports {
-        mavenBom 'org.junit:junit-bom:5.11.4'
-    }
 }
 
 dependencies {
@@ -43,9 +31,13 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'			// The Mapstruct annotation processor
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'	// Test capabilties for Spring Boot
-	testImplementation 'org.junit.jupiter:junit-jupiter'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'			
+	//testImplementation 'org.junit.jupiter:junit-jupiter'
+	//testRuntimeOnly 'org.junit.platform:junit-platform-launcher'			
 	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'        // Mapstruct annotation process for test code
+	
+	testImplementation(platform("org.junit:junit-bom:6.0.1"))
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 task fatJar(type: Jar) {
@@ -61,16 +53,17 @@ task fatJar(type: Jar) {
     with jar
 }
 
-tasks.named('test') {
-	jvmArgs '-Dnet.bytebuddy.experimental=true'
+test {
+	jvmArgs "-Dnet.bytebuddy.experimental=true", "-XX:+EnableDynamicAgentLoading"
 	useJUnitPlatform()
 }
 
 tasks.withType(JavaCompile) {
-options.compilerArgs = ['-parameters']
-doFirst {
-    println "Compiler args: ${options.compilerArgs}"
-}}
+    options.compilerArgs = ['-parameters', '--enable-preview']
+    doFirst {
+        println "Compiler args: ${options.compilerArgs}"
+    }
+}
 
 compileJava {
     options.compilerArgs += [
