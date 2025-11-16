@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.5'
+	id 'org.springframework.boot' version '3.4.6'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id "com.diffplug.eclipse.apt" version "4.3.0" // Mapstruct - only for Eclipse 
 }
@@ -16,6 +16,12 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.junit:junit-bom:5.11.4'
+    }
 }
 
 dependencies {
@@ -37,8 +43,9 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'			// The Mapstruct annotation processor
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'	// Test capabilties for Spring Boot
+	testImplementation 'org.junit.jupiter:junit-jupiter'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'			
-	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'		// Mapstruct annotation process for test code
+	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'        // Mapstruct annotation process for test code
 }
 
 task fatJar(type: Jar) {
@@ -55,6 +62,7 @@ task fatJar(type: Jar) {
 }
 
 tasks.named('test') {
+	jvmArgs '-Dnet.bytebuddy.experimental=true'
 	useJUnitPlatform()
 }
 
