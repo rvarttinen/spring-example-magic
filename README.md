@@ -20,7 +20,7 @@ A simple example of using Spring Boot with an external source of data converting
 # Introduction
 This project has several purposes: 
 * serve as an example of how to retrieve data from an external service and store that data in a triple store after applying semantics
-* base for experimentation using the latest and greatest of Java (currently 24) and other libraries used in this project
+* base for experimentation using the latest and greatest of Java (currently 25) and other libraries used in this project
 * act as a repository of "nice-to-have" stuff on how to do things Spring Boot, RDF, etc., i.e. implementation, testing, format conversion, asynch, practicies, etc.
 * additional experimentation could also include performing inference using RDF and not AI (!), probably more interesting once we fetch data from more than one disparate source. 
 
