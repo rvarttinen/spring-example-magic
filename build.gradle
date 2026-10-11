@@ -18,9 +18,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
 
-    implementation 'org.apache.jena:apache-jena-libs:5.3.0'
-    implementation 'org.apache.jena:jena-querybuilder:5.3.0'
-    implementation 'org.apache.jena:jena-fuseki-main:5.3.0'
+    implementation 'org.apache.jena:apache-jena-libs:6.2.0'
+    implementation 'org.apache.jena:jena-querybuilder:6.2.0'
+    implementation 'org.apache.jena:jena-fuseki-main:6.2.0'
 
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3'
 
