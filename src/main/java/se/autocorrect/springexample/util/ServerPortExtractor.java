@@ -1,6 +1,6 @@
 package se.autocorrect.springexample.util;
 
-import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
+import org.springframework.boot.web.server.servlet.context.ServletWebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
