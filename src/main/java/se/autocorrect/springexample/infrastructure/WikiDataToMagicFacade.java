@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.apache.jena.rdf.model.Model;
 import org.mapstruct.util.Experimental;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 import se.autocorrect.springexample.infrastructure.rest.WikiDataRestClient;
