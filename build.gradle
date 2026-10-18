@@ -16,11 +16,12 @@ defaultTasks 'build'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
 dependencies {
+    // Ensure the Spring Boot dependency versions are provided (BOM)
     implementation(platform("org.springframework.boot:spring-boot-dependencies:4.1.1"))
 
     implementation 'org.springframework.boot:spring-boot-starter'
