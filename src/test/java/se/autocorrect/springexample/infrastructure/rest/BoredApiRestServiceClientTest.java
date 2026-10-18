@@ -36,7 +36,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.restclient.test.autoconfigure.RestClientTest;
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -115,7 +115,7 @@ class BoredApiRestServiceClientTest {
 	
 	
 	private String data = """
-			{
+				{
 	"activity": "Learn Express.js",
 	"accessibility": 0.25,
 	"type": "education",
@@ -123,6 +123,6 @@ class BoredApiRestServiceClientTest {
 	"price": 0.1,
 	"link": "https://expressjs.com/",
 	"key": "3943506"
-			} 
-			""";
+				} 
+				""";
 }
