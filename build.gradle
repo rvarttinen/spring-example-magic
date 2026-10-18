@@ -37,6 +37,14 @@ dependencies {
 
     // Required for Mockito to work on JDK 25
     implementation 'net.bytebuddy:byte-buddy:1.18.15'
+
+    // Some test annotations (MockBean, AutoConfigureMockMvc, etc.) are provided
+    // by the following Spring Boot test modules. Dependabot or changes in the
+    // dependency graph can sometimes cause these to be missing from the
+    // test compile classpath — add them explicitly to ensure tests compile
+    // in CI.
+    testImplementation 'org.springframework.boot:spring-boot-test'
+    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
 }
 
 task fatJar(type: Jar) {
