@@ -30,7 +30,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aspectj'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'org.springframework.boot:spring-boot-restclient'
-    implementation 'org.springframework.boot:spring-boot-test-autoconfigure'
 
     implementation 'org.apache.jena:apache-jena-libs:6.2.0'
     implementation 'org.apache.jena:jena-querybuilder:6.2.0'
@@ -48,6 +47,8 @@ dependencies {
     // Spring Boot test starter (keeps test deps in sync with Boot 4)
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
+    testImplementation 'org.springframework.boot:spring-boot-test'
+    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
     testImplementation(platform("org.junit:junit-bom:6.1.3"))
