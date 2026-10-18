@@ -8,27 +8,21 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.jena.query.Query;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.RDF;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.google.common.hash.BloomFilter;
 
-import se.autocorrect.springexample.rdf.Magic;
 import se.autocorrect.springexample.store.MagicResultProcessor;
 import se.autocorrect.springexample.store.TripleStore;
-import se.autocorrect.springexample.util.RDFUtils;
 
 
 @SpringBootTest(classes = {BoredToMagicServiceFacadeTest.Conf.class}, webEnvironment = NONE)
@@ -41,13 +35,13 @@ class BoredToMagicServiceFacadeTest {
     static class Conf {
     }
     
-    @MockBean
+    @MockitoBean
     private ExternalService externalService;
 
-    @MockBean
+    @MockitoBean
     private TripleStore tripleStore;
 
-    @MockBean
+    @MockitoBean
     private BloomFilter<String> bloomFilter;
     
     @Autowired

@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import se.autocorrect.springexample.infrastructure.BoredToMagicServciceFacade;
 import se.autocorrect.springexample.infrastructure.ExternalMagic;
@@ -27,7 +27,7 @@ public class MagicServiceTest {
     static class Conf {
     }
     
-    @MockBean
+    @MockitoBean
     BoredToMagicServciceFacade boredToMagicServiceFacade;
     
     @Autowired
