@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -49,8 +48,8 @@ public class BoredApiRestServiceClient implements ExternalService {
     @Value("${bored.api.baseurl:default}")
     private String baseUrl;
     
-    BoredApiRestServiceClient(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
+    BoredApiRestServiceClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     @Override

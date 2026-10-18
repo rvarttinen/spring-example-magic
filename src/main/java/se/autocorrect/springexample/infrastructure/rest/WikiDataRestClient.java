@@ -9,7 +9,6 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
 import org.mapstruct.util.Experimental;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,8 +28,8 @@ public class WikiDataRestClient implements WikiDataService {
     @Value("${wikidata.api.baseurl:default}")
     private String baseUrl;
     
-    WikiDataRestClient(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
+    WikiDataRestClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package se.autocorrect.springexample.util;
 
-import org.springframework.boot.web.server.servlet.context.ServletWebServerInitializedEvent;
+import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class ServerPortExtractor {
      * @param event the web server init event
      */
     @EventListener
-    public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
+    public void onApplicationEvent(final WebServerInitializedEvent  event) {
         port = event.getWebServer().getPort();
     }
 }
