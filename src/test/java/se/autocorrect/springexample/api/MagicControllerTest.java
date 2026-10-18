@@ -62,70 +62,70 @@ class MagicControllerTest {
 
      private static final String BEARER_TESTBEARERTOKEN = "Bearer testbearertoken";
 
-        private static final String URL_TEMPLATE = "/v1";
+         private static final String URL_TEMPLATE = "/v1";
 
-        @Configuration
-        @EnableAutoConfiguration
-        @Import({MagicController.class})
-        static class Conf{
-        }
+         @Configuration
+         @EnableAutoConfiguration
+         @Import({MagicController.class})
+         static class Conf{
+         }
 
-        @Autowired
-        private MockMvc mockMvc;
+         @Autowired
+         private MockMvc mockMvc;
 
-        @MockitoBean
-        @Qualifier("magicService")
-        private MagicService magicServiceMock;
+         @MockitoBean
+         @Qualifier("magicService")
+         private MagicService magicServiceMock;
 
-        @MockitoBean
-        @Qualifier("magicRdfService")
-        private MagicRDFService magicRdfServiceMock;
-        
-        @Test
-        @DisplayName("Test retrieving all magic there is - no element")
-        void testListAllMagicEmpty() throws Exception {
-
-            when(magicServiceMock.listAllMagic()).thenReturn(Collections.emptyList());
-
-            MockHttpServletResponse response = this.mockMvc.perform(get(URL_TEMPLATE + "/magic")
-                            .headers(getHeaders()))
-                    .andExpect(status().isNoContent())
-                    .andReturn()
-                    .getResponse()
-                    ;
-
-            assertAll(
-                    () -> verify(magicServiceMock).listAllMagic(),
-                    () -> assertEquals(Collections.emptyList().size(), response.getContentLength())
-            );
-        }
-
-        @Test
-        @DisplayName("Test retrieving all magic there is - one element")
-        void testListAllMagicOneMagicElement() throws Exception {
+         @MockitoBean
+         @Qualifier("magicRdfService")
+         private MagicRDFService magicRdfServiceMock;
          
-            MagicStuff magicStuff = new MagicStuff("id", "magic", "type");
-                    
-            when(magicServiceMock.listAllMagic()).thenReturn(Collections.singletonList(magicStuff));
+         @Test
+         @DisplayName("Test retrieving all magic there is - no element")
+         void testListAllMagicEmpty() throws Exception {
 
-            MockHttpServletResponse response = this.mockMvc.perform(get(URL_TEMPLATE + "/magic")
-                            .headers(getHeaders()))
-                    .andExpect(status().isOk())
-                    .andReturn()
-                    .getResponse()
-                    ;
+             when(magicServiceMock.listAllMagic()).thenReturn(Collections.emptyList());
 
-            assertAll(
-                    () -> verify(magicServiceMock).listAllMagic(),
-                    () -> assertEquals(Collections.emptyList().size(), response.getContentLength())
-            );
-        }
+             MockHttpServletResponse response = this.mockMvc.perform(get(URL_TEMPLATE + "/magic")
+                             .headers(getHeaders()))
+                     .andExpect(status().isNoContent())
+                     .andReturn()
+                     .getResponse()
+                     ;
 
-        private HttpHeaders getHeaders() {
-            
-            return new HttpHeaders() {{
-                set("Authorization", BEARER_TESTBEARERTOKEN);
-                setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            }};
-        }
+             assertAll(
+                     () -> verify(magicServiceMock).listAllMagic(),
+                     () -> assertEquals(Collections.emptyList().size(), response.getContentLength())
+             );
+         }
+
+         @Test
+         @DisplayName("Test retrieving all magic there is - one element")
+         void testListAllMagicOneMagicElement() throws Exception {
+          
+             MagicStuff magicStuff = new MagicStuff("id", "magic", "type");
+                     
+             when(magicServiceMock.listAllMagic()).thenReturn(Collections.singletonList(magicStuff));
+
+             MockHttpServletResponse response = this.mockMvc.perform(get(URL_TEMPLATE + "/magic")
+                             .headers(getHeaders()))
+                     .andExpect(status().isOk())
+                     .andReturn()
+                     .getResponse()
+                     ;
+
+             assertAll(
+                     () -> verify(magicServiceMock).listAllMagic(),
+                     () -> assertEquals(Collections.emptyList().size(), response.getContentLength())
+             );
+         }
+
+         private HttpHeaders getHeaders() {
+             
+             return new HttpHeaders() {{
+                 set("Authorization", BEARER_TESTBEARERTOKEN);
+                 setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+             }};
+         }
 }
