@@ -39,9 +39,12 @@ dependencies {
     implementation 'com.google.guava:guava:33.7.2-jre'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
+    // Diagnostic: temporarily place the test autoconfigure artifact on the main implementation classpath
+    // so we can confirm whether missing test-autoconfigure on the test compile classpath is the root cause.
+    implementation 'org.springframework.boot:spring-boot-test-autoconfigure:4.1.1'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test:4.1.1'
     testImplementation 'org.springframework.boot:spring-boot-test:4.1.1'
-    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure:4.1.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test:4.1.1'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
