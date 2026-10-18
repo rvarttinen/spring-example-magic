@@ -32,7 +32,6 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.mapstruct.util.Experimental;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -50,7 +49,6 @@ import se.autocorrect.springexample.rdf.LDMediaTypes;
 import se.autocorrect.springexample.services.AsyncService;
 import se.autocorrect.springexample.util.HeaderContentTypeUtil;
 
-@Experimental
 @RestController
 @RequestMapping("/v2")
 public class MagicAsyncController {
