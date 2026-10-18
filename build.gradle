@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.1.1'        // keep this if your branch already set it
     // DO NOT include 'io.spring.dependency-management' here for Spring Boot 4
-    id 'org.springframework.boot' version '4.1.1'
     id "com.diffplug.eclipse.apt" version "4.4.1"
 }
 
@@ -22,6 +21,8 @@ java {
 }
 
 dependencies {
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:4.1.1"))
+
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -33,7 +34,7 @@ dependencies {
     implementation 'org.apache.jena:apache-jena-libs:6.2.0'
     implementation 'org.apache.jena:jena-querybuilder:6.2.0'
     implementation 'org.apache.jena:jena-fuseki-main:6.2.0'
-    
+
     implementation 'org.jspecify:jspecify'
 
     // Remove the explicit Jackson 2.x pin so Boot 4 provides the compatible Jackson 3.x modules:
@@ -52,8 +53,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-    // Required for Mockito to work on JDK 25
-    implementation 'net.bytebuddy:byte-buddy:1.18.15'
+    // Required for Mockito to work on JDK 25 (test scope)
+    testImplementation 'net.bytebuddy:byte-buddy:1.18.15'
 }
 
 task fatJar(type: Jar) {
