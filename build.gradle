@@ -37,7 +37,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     // Required for Mockito to work on JDK 25
-    implementation 'net.bytebuddy:byte-buddy:1.18.14'
+    implementation 'net.bytebuddy:byte-buddy:1.18.15'
 }
 
 task fatJar(type: Jar) {
