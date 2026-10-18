@@ -1,7 +1,8 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '4.1.1'        // keep this if your branch already set it
+    // DO NOT include 'io.spring.dependency-management' here for Spring Boot 4
     id 'org.springframework.boot' version '4.1.1'
-    id 'io.spring.dependency-management' version '1.1.7'
     id "com.diffplug.eclipse.apt" version "4.4.1"
 }
 
@@ -10,6 +11,14 @@ version = '0.2.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+defaultTasks 'build'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 dependencies {
@@ -27,12 +36,14 @@ dependencies {
     
     implementation 'org.jspecify:jspecify'
 
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.3'
+    // Remove the explicit Jackson 2.x pin so Boot 4 provides the compatible Jackson 3.x modules:
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 
     implementation 'org.mapstruct:mapstruct:1.6.3'
     implementation 'com.google.guava:guava:33.7.2-jre'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
+    // Spring Boot test starter (keeps test deps in sync with Boot 4)
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
