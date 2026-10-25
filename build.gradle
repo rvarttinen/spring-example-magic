@@ -22,7 +22,7 @@ dependencies {
     implementation 'org.apache.jena:jena-querybuilder:6.2.0'
     implementation 'org.apache.jena:jena-fuseki-main:6.2.0'
 
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.3'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.4'
 
     implementation 'org.mapstruct:mapstruct:1.6.3'
     implementation 'com.google.guava:guava:33.7.2-jre'
