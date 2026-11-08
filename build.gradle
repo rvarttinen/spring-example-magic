@@ -36,7 +36,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     // Required for Mockito to work on JDK 25
-    implementation 'net.bytebuddy:byte-buddy:1.18.16'
+    implementation 'net.bytebuddy:byte-buddy:1.18.17'
 
     // Some test annotations (MockBean, AutoConfigureMockMvc, etc.) are provided
     // by the following Spring Boot test modules. Dependabot or changes in the
