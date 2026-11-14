@@ -20,6 +20,22 @@ java {
 }
 
 dependencies {
+
+    constraints {
+        implementation('org.bouncycastle:bcprov-jdk18on:1.85') {
+            because 'Fixes the reported Bouncy Castle vulnerabilities'
+        }
+        implementation('org.apache.commons:commons-lang3:3.18.0') {
+            because 'Fixes the reported uncontrolled-recursion vulnerability'
+        }
+        implementation('org.apache.shiro:shiro-core:3.0.0') {
+            because 'Fixes the reported remember-me cookie age vulnerability'
+        }
+        implementation('org.apache.shiro:shiro-web:3.0.0') {
+            because 'Fixes the reported remember-me cookie age vulnerability'
+        }
+    }
+    
     def springBootBom = platform("org.springframework.boot:spring-boot-dependencies:4.1.2")
     implementation springBootBom
     testImplementation springBootBom
