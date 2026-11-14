@@ -1,7 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.8'
-    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot' version '4.1.2'
     id "com.diffplug.eclipse.apt" version "4.4.1"
 }
 
@@ -12,10 +11,24 @@ repositories {
     mavenCentral()
 }
 
+defaultTasks 'build'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
 dependencies {
+    def springBootBom = platform("org.springframework.boot:spring-boot-dependencies:4.1.2")
+    implementation springBootBom
+    testImplementation springBootBom
+
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-restclient'
+    implementation 'org.springframework.boot:spring-boot-starter-aspectj'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
 
     implementation 'org.apache.jena:apache-jena-libs:6.2.0'
@@ -29,6 +42,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
     testImplementation(platform("org.junit:junit-bom:6.1.3"))
