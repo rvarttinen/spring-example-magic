@@ -34,6 +34,9 @@ dependencies {
         implementation('org.apache.shiro:shiro-web:3.0.0') {
             because 'Fixes the reported remember-me cookie age vulnerability'
         }
+        implementation('org.apache.commons:commons-lang3:3.18.0') {
+            because 'Fixes CVE-2025-48924'
+        }
     }
     
     def springBootBom = platform("org.springframework.boot:spring-boot-dependencies:4.1.2")
