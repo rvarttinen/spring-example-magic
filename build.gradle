@@ -33,7 +33,7 @@ dependencies {
         implementation('org.apache.shiro:shiro-core:3.0.0') {
             because 'Fixes the reported remember-me cookie age vulnerability'
         }
-        implementation('org.apache.shiro:shiro-web:3.0.0') {
+        implementation('org.apache.shiro:shiro-web:3.0.1') {
             because 'Fixes the reported remember-me cookie age vulnerability'
         }
         implementation('org.apache.commons:commons-lang3:3.18.0') {
