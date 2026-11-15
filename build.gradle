@@ -27,7 +27,7 @@ dependencies {
         implementation('org.bouncycastle:bcprov-jdk18on:1.85') {
             because 'Fixes the reported Bouncy Castle vulnerabilities'
         }
-         implementation('org.apache.commons:commons-lang3:3.18.0') {
+         implementation('org.apache.commons:commons-lang3:3.22.0') {
             because 'Fixes CVE-2025-48924 / GHSA-j288-q9x7-2f5v'
         }
         implementation('org.apache.shiro:shiro-core:3.0.0') {
@@ -36,7 +36,7 @@ dependencies {
         implementation('org.apache.shiro:shiro-web:3.0.0') {
             because 'Fixes the reported remember-me cookie age vulnerability'
         }
-        implementation('org.apache.commons:commons-lang3:3.18.0') {
+        implementation('org.apache.commons:commons-lang3:3.22.0') {
             because 'Fixes CVE-2025-48924'
         }
     }
