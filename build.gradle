@@ -1,4 +1,4 @@
-plugins {
+Yplugins {
     id 'java'
     id 'org.springframework.boot' version '4.1.2'
     id "com.diffplug.eclipse.apt" version "4.4.1"
@@ -33,7 +33,7 @@ dependencies {
         implementation('org.apache.shiro:shiro-core:3.0.2') {
             because 'Fixes the reported remember-me cookie age vulnerability'
         }
-        implementation('org.apache.shiro:shiro-web:3.0.1') {
+        implementation('org.apache.shiro:shiro-web:3.0.2') {
             because 'Fixes the reported remember-me cookie age vulnerability'
         }
         implementation('org.apache.commons:commons-lang3:3.22.0') {
