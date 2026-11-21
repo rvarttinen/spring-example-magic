@@ -75,9 +75,8 @@ dependencies {
     implementation 'net.bytebuddy:byte-buddy:1.18.17'
 
     // Some test annotations (MockBean, AutoConfigureMockMvc, etc.) are provided
-    // by the following Spring Boot test modules. Dependabot or changes in the
-    // dependency graph can sometimes cause these to be missing from the
-    // test compile classpath — add them explicitly to ensure tests compile
+    // by the following Spring Boot test modules. Dependency resolution or changes in the
+    // dependency graph can sometimes cause these to be missing from the test compile classpath — add them explicitly to ensure tests compile
     // in CI.
     testImplementation 'org.springframework.boot:spring-boot-test'
     testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
